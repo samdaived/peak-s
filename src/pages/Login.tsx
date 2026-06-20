@@ -4,65 +4,47 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { login } from '@/lib/buyerAuth';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 
 const copy = {
-  en: {
-    title: 'Buyer Login',
-    subtitle: 'Peak Nutrition Health & Wellness',
-    username: 'Username',
-    password: 'Password',
-    submit: 'Sign in',
-    back: '← Back to site',
-    admin: 'Admin access',
-    welcome: 'Welcome',
-    invalid: 'Invalid credentials',
-  },
-  fr: {
-    title: 'Connexion Acheteur',
-    subtitle: 'Peak Nutrition Health & Wellness',
-    username: "Nom d'utilisateur",
-    password: 'Mot de passe',
-    submit: 'Se connecter',
-    back: '← Retour au site',
-    admin: 'Accès administrateur',
-    welcome: 'Bienvenue',
-    invalid: 'Identifiants invalides',
-  },
-  ar: {
-    title: 'تسجيل دخول المشتري',
-    subtitle: 'بيك نيوتريشن للصحة والعافية',
-    username: 'اسم المستخدم',
-    password: 'كلمة المرور',
-    submit: 'تسجيل الدخول',
-    back: '← العودة إلى الموقع',
-    admin: 'دخول المسؤول',
-    welcome: 'مرحباً',
-    invalid: 'بيانات الاعتماد غير صحيحة',
-  },
+  en: { title: 'Buyer Portal', subtitle: 'Peak Nutrition Health & Wellness', email: 'Email', password: 'Password', company: 'Company name', signin: 'Sign in', signup: 'Create account', back: '← Back to site' },
+  fr: { title: 'Portail Acheteur', subtitle: 'Peak Nutrition', email: 'Email', password: 'Mot de passe', company: "Nom de l'entreprise", signin: 'Se connecter', signup: 'Créer un compte', back: '← Retour au site' },
+  ar: { title: 'بوابة المشتري', subtitle: 'بيك نيوتريشن', email: 'البريد الإلكتروني', password: 'كلمة المرور', company: 'اسم الشركة', signin: 'تسجيل الدخول', signup: 'إنشاء حساب', back: '← العودة' },
 };
 
 const Login = () => {
   const navigate = useNavigate();
   const { language, direction } = useLanguage();
+  const { signIn, signUp } = useAuth();
   const c = copy[language] ?? copy.en;
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [company, setCompany] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    const account = login(username.trim(), password);
-    if (account) {
-      toast({ title: `${c.welcome}, ${account.companyName}` });
-      navigate('/prices');
-    } else {
-      toast({ title: c.invalid, variant: 'destructive' });
-    }
+    setBusy(true);
+    const { error } = await signIn(email, password);
+    setBusy(false);
+    if (error) return toast({ title: 'Sign-in failed', description: error, variant: 'destructive' });
+    toast({ title: 'Welcome back!' });
+    navigate('/prices');
+  };
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    const { error } = await signUp(email, password, company);
+    setBusy(false);
+    if (error) return toast({ title: 'Sign-up failed', description: error, variant: 'destructive' });
+    toast({ title: 'Account created — you can sign in now.' });
   };
 
   return (
@@ -74,20 +56,48 @@ const Login = () => {
             <h1 className="text-2xl font-bold">{c.title}</h1>
             <p className="text-sm text-muted-foreground">{c.subtitle}</p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">{c.username}</Label>
-              <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">{c.password}</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </div>
-            <Button type="submit" className="w-full">{c.submit}</Button>
-          </form>
-          <div className="text-center text-xs text-muted-foreground space-y-1">
-            <Link to="/" className="hover:text-primary block">{c.back}</Link>
-            <Link to="/admin" className="hover:text-primary block">{c.admin}</Link>
+
+          <Tabs defaultValue="signin">
+            <TabsList className="grid grid-cols-2 w-full">
+              <TabsTrigger value="signin">{c.signin}</TabsTrigger>
+              <TabsTrigger value="signup">{c.signup}</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="signin">
+              <form onSubmit={handleSignIn} className="space-y-4 pt-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">{c.email}</Label>
+                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">{c.password}</Label>
+                  <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <Button type="submit" className="w-full" disabled={busy}>{c.signin}</Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="signup">
+              <form onSubmit={handleSignUp} className="space-y-4 pt-4">
+                <div className="space-y-2">
+                  <Label htmlFor="su-company">{c.company}</Label>
+                  <Input id="su-company" value={company} onChange={(e) => setCompany(e.target.value)} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="su-email">{c.email}</Label>
+                  <Input id="su-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="su-password">{c.password}</Label>
+                  <Input id="su-password" type="password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <Button type="submit" className="w-full" disabled={busy}>{c.signup}</Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+
+          <div className="text-center text-xs text-muted-foreground">
+            <Link to="/" className="hover:text-primary">{c.back}</Link>
           </div>
         </Card>
       </main>

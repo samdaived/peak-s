@@ -4,13 +4,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getCurrentBuyer, logout } from '@/lib/buyerAuth';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const Header = () => {
   const { t, direction } = useLanguage();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [buyer, setBuyer] = useState(() => getCurrentBuyer());
+  const { user, signOut } = useAuth();
+  const buyer = user ? { username: user.email?.split('@')[0] ?? 'user' } : null;
 
   const pricesLabel =
     t.nav.products === 'Produits' ? 'Tarifs' : t.nav.products === 'المنتجات' ? 'الأسعار' : 'Prices';
@@ -23,9 +24,8 @@ export const Header = () => {
     { label: pricesLabel, href: '/prices', internal: true },
   ];
 
-  const handleLogout = () => {
-    logout();
-    setBuyer(null);
+  const handleLogout = async () => {
+    await signOut();
     navigate('/login');
   };
 
