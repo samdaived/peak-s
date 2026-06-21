@@ -25,13 +25,17 @@ if (!CUSTOM_SUPABASE_ANON_KEY) {
   );
 }
 
-export const supabase = createClient(CUSTOM_SUPABASE_URL, CUSTOM_SUPABASE_ANON_KEY, {
-  auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
+export const supabase = createClient(
+  CUSTOM_SUPABASE_URL,
+  CUSTOM_SUPABASE_ANON_KEY || 'placeholder-anon-key',
+  {
+    auth: {
+      storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+      persistSession: true,
+      autoRefreshToken: true,
+    },
   },
-});
+);
 
 /**
  * Call an edge function on the custom Supabase project.
