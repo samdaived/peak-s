@@ -57,44 +57,17 @@ const Login = () => {
             <p className="text-sm text-muted-foreground">{c.subtitle}</p>
           </div>
 
-          <Tabs defaultValue="signin">
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="signin">{c.signin}</TabsTrigger>
-              <TabsTrigger value="signup">{c.signup}</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="signin">
-              <form onSubmit={handleSignIn} className="space-y-4 pt-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">{c.email}</Label>
-                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">{c.password}</Label>
-                  <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </div>
-                <Button type="submit" className="w-full" disabled={busy}>{c.signin}</Button>
-              </form>
-            </TabsContent>
-
-            <TabsContent value="signup">
-              <form onSubmit={handleSignUp} className="space-y-4 pt-4">
-                <div className="space-y-2">
-                  <Label htmlFor="su-company">{c.company}</Label>
-                  <Input id="su-company" value={company} onChange={(e) => setCompany(e.target.value)} required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="su-email">{c.email}</Label>
-                  <Input id="su-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="su-password">{c.password}</Label>
-                  <Input id="su-password" type="password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </div>
-                <Button type="submit" className="w-full" disabled={busy}>{c.signup}</Button>
-              </form>
-            </TabsContent>
-          </Tabs>
+          <form onSubmit={handleSignIn} className="space-y-4 pt-2">
+            <div className="space-y-2">
+              <Label htmlFor="email">{c.email}</Label>
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">{c.password}</Label>
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </div>
+            <Button type="submit" className="w-full" disabled={busy}>{c.signin}</Button>
+          </form>
 
           <div className="text-center text-xs text-muted-foreground">
             <Link to="/" className="hover:text-primary">{c.back}</Link>
