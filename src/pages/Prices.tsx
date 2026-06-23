@@ -1,17 +1,24 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { LogOut, Heart, ShoppingCart, X, ListOrdered } from 'lucide-react';
-import { supabase, callEdgeFunction } from '@/lib/customSupabase';
-import { useAuth } from '@/contexts/AuthContext';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { toast } from '@/hooks/use-toast';
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/customSupabase";
+import { Heart, ListOrdered, LogOut, ShoppingCart, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
   id: string;
@@ -31,34 +38,46 @@ const Prices = () => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [cart, setCart] = useState<Record<string, CartLine>>({});
   const [showCart, setShowCart] = useState(false);
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [notes, setNotes] = useState('');
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const load = async () => {
       // Products come from your custom Supabase edge function.
       // The function should return either an array of products or { products: Product[] }.
-      const { data, error } = await callEdgeFunction<Product[] | { products: Product[] }>(
-        'database-access',
-      );
+      const { data: products, error } = await supabase
+        .from("products")
+        .select("*");
+
       if (error) {
-        toast({ title: 'Could not load products', description: error.message, variant: 'destructive' });
-      } else if (data) {
-        const list = Array.isArray(data) ? data : data.products ?? [];
+        toast({
+          title: "Could not load products",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else if (products) {
+        const list = Array.isArray(products) ? products : (products ?? []);
         setProducts(list);
       }
 
       if (user) {
         // TODO: replace with your own edge function once it's ready.
         try {
-          const { data: favs } = await supabase.from('favorites').select('product_id').eq('user_id', user.id);
+          const { data: favs } = await supabase
+            .from("favorites")
+            .select("product_id")
+            .eq("user_id", user.id);
           setFavorites(new Set((favs ?? []).map((f: any) => f.product_id)));
-          const { data: profile } = await supabase.from('profiles').select('phone, shipping_address').eq('id', user.id).maybeSingle();
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("phone, shipping_address")
+            .eq("id", user.id)
+            .maybeSingle();
           if (profile) {
-            setPhone(profile.phone ?? '');
-            setAddress(profile.shipping_address ?? '');
+            setPhone(profile.phone ?? "");
+            setAddress(profile.shipping_address ?? "");
           }
         } catch {
           /* tables not created yet — ignore */
@@ -71,11 +90,24 @@ const Prices = () => {
   const toggleFavorite = async (p: Product) => {
     if (!user) return;
     if (favorites.has(p.id)) {
-      await supabase.from('favorites').delete().eq('user_id', user.id).eq('product_id', p.id);
-      const next = new Set(favorites); next.delete(p.id); setFavorites(next);
+      await supabase
+        .from("favorites")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("product_id", p.id);
+      const next = new Set(favorites);
+      next.delete(p.id);
+      setFavorites(next);
     } else {
-      const { error } = await supabase.from('favorites').insert({ user_id: user.id, product_id: p.id });
-      if (error) return toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      const { error } = await supabase
+        .from("favorites")
+        .insert({ user_id: user.id, product_id: p.id });
+      if (error)
+        return toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
       setFavorites(new Set(favorites).add(p.id));
     }
   };
@@ -85,7 +117,7 @@ const Prices = () => {
       ...c,
       [p.id]: c[p.id]
         ? { ...c[p.id], quantity: c[p.id].quantity + 1 }
-        : { product: p, quantity: 1, date_needed: '' },
+        : { product: p, quantity: 1, date_needed: "" },
     }));
     toast({ title: `${p.name} added` });
   };
@@ -95,20 +127,25 @@ const Prices = () => {
   };
 
   const removeLine = (id: string) => {
-    setCart((c) => { const next = { ...c }; delete next[id]; return next; });
+    setCart((c) => {
+      const next = { ...c };
+      delete next[id];
+      return next;
+    });
   };
 
   const cartItems = Object.values(cart);
   const cartTotal = useMemo(
-    () => cartItems.reduce((s, l) => s + Number(l.product.price) * l.quantity, 0),
-    [cartItems]
+    () =>
+      cartItems.reduce((s, l) => s + Number(l.product.price) * l.quantity, 0),
+    [cartItems],
   );
 
   const submitOrder = async () => {
     if (!user || cartItems.length === 0) return;
     setSubmitting(true);
     const { data: order, error: orderErr } = await supabase
-      .from('orders')
+      .from("orders")
       .insert({
         user_id: user.id,
         shipping_address: address || null,
@@ -120,7 +157,11 @@ const Prices = () => {
       .single();
     if (orderErr || !order) {
       setSubmitting(false);
-      return toast({ title: 'Could not create order', description: orderErr?.message, variant: 'destructive' });
+      return toast({
+        title: "Could not create order",
+        description: orderErr?.message,
+        variant: "destructive",
+      });
     }
     const items = cartItems.map((l) => ({
       order_id: order.id,
@@ -129,21 +170,36 @@ const Prices = () => {
       date_needed: l.date_needed || null,
       unit_price: l.product.price,
     }));
-    const { error: itemsErr } = await supabase.from('order_items').insert(items);
+    const { error: itemsErr } = await supabase
+      .from("order_items")
+      .insert(items);
     setSubmitting(false);
-    if (itemsErr) return toast({ title: 'Could not save items', description: itemsErr.message, variant: 'destructive' });
+    if (itemsErr)
+      return toast({
+        title: "Could not save items",
+        description: itemsErr.message,
+        variant: "destructive",
+      });
 
     // persist profile defaults
-    await supabase.from('profiles').upsert({ id: user.id, phone, shipping_address: address });
+    await supabase
+      .from("profiles")
+      .upsert({ id: user.id, phone, shipping_address: address });
 
-    toast({ title: 'Order placed!', description: `Total: ${cartTotal.toFixed(2)} MAD` });
+    toast({
+      title: "Order placed!",
+      description: `Total: ${cartTotal.toFixed(2)} MAD`,
+    });
     setCart({});
     setShowCart(false);
-    setNotes('');
-    navigate('/orders');
+    setNotes("");
+    navigate("/orders");
   };
 
-  const handleLogout = async () => { await signOut(); navigate('/login', { replace: true }); };
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login", { replace: true });
+  };
 
   const sortedProducts = useMemo(() => {
     return [...products].sort((a, b) => {
@@ -160,15 +216,18 @@ const Prices = () => {
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold">Wholesale Prices</h1>
+              <h1 className="text-2xl md:text-3xl font-bold">
+                Wholesale Prices
+              </h1>
               <p className="text-sm text-muted-foreground">{user?.email}</p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => navigate('/orders')}>
+              <Button variant="outline" onClick={() => navigate("/orders")}>
                 <ListOrdered className="h-4 w-4 mr-2" /> My orders
               </Button>
               <Button onClick={() => setShowCart((s) => !s)}>
-                <ShoppingCart className="h-4 w-4 mr-2" /> Cart ({cartItems.length})
+                <ShoppingCart className="h-4 w-4 mr-2" /> Cart (
+                {cartItems.length})
               </Button>
               <Button variant="outline" onClick={handleLogout}>
                 <LogOut className="h-4 w-4 mr-2" /> Logout
@@ -202,7 +261,11 @@ const Prices = () => {
                               type="number"
                               min={1}
                               value={l.quantity}
-                              onChange={(e) => updateLine(l.product.id, { quantity: Math.max(1, Number(e.target.value)) })}
+                              onChange={(e) =>
+                                updateLine(l.product.id, {
+                                  quantity: Math.max(1, Number(e.target.value)),
+                                })
+                              }
                               className="w-24"
                             />
                           </TableCell>
@@ -210,13 +273,23 @@ const Prices = () => {
                             <Input
                               type="date"
                               value={l.date_needed}
-                              onChange={(e) => updateLine(l.product.id, { date_needed: e.target.value })}
+                              onChange={(e) =>
+                                updateLine(l.product.id, {
+                                  date_needed: e.target.value,
+                                })
+                              }
                               className="w-44"
                             />
                           </TableCell>
-                          <TableCell className="text-right">{(Number(l.product.price) * l.quantity).toFixed(2)}</TableCell>
+                          <TableCell className="text-right">
+                            {(Number(l.product.price) * l.quantity).toFixed(2)}
+                          </TableCell>
                           <TableCell>
-                            <Button variant="ghost" size="icon" onClick={() => removeLine(l.product.id)}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeLine(l.product.id)}
+                            >
                               <X className="h-4 w-4" />
                             </Button>
                           </TableCell>
@@ -228,22 +301,33 @@ const Prices = () => {
                   <div className="grid md:grid-cols-3 gap-4 pt-4 border-t">
                     <div className="space-y-2">
                       <Label>Phone</Label>
-                      <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+                      <Input
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <Label>Shipping address</Label>
-                      <Input value={address} onChange={(e) => setAddress(e.target.value)} />
+                      <Input
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
                     </div>
                     <div className="space-y-2 md:col-span-3">
                       <Label>Notes</Label>
-                      <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
+                      <Textarea
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                      />
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between pt-4 border-t">
-                    <div className="text-lg font-bold">Total: {cartTotal.toFixed(2)} MAD</div>
+                    <div className="text-lg font-bold">
+                      Total: {cartTotal.toFixed(2)} MAD
+                    </div>
                     <Button onClick={submitOrder} disabled={submitting}>
-                      {submitting ? 'Placing…' : 'Place order'}
+                      {submitting ? "Placing…" : "Place order"}
                     </Button>
                   </div>
                 </>
@@ -267,16 +351,28 @@ const Prices = () => {
                 {sortedProducts.map((p) => (
                   <TableRow key={p.id}>
                     <TableCell>
-                      <Button variant="ghost" size="icon" onClick={() => toggleFavorite(p)}>
-                        <Heart className={`h-4 w-4 ${favorites.has(p.id) ? 'fill-primary text-primary' : ''}`} />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => toggleFavorite(p)}
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${favorites.has(p.id) ? "fill-primary text-primary" : ""}`}
+                        />
                       </Button>
                     </TableCell>
                     <TableCell className="font-mono text-xs">{p.sku}</TableCell>
                     <TableCell>{p.name}</TableCell>
-                    <TableCell className="text-muted-foreground">{p.category}</TableCell>
-                    <TableCell className="text-right font-semibold">{Number(p.price).toFixed(2)}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {p.category}
+                    </TableCell>
+                    <TableCell className="text-right font-semibold">
+                      {Number(p.price).toFixed(2)}
+                    </TableCell>
                     <TableCell className="text-right">
-                      <Button size="sm" onClick={() => addToCart(p)}>Add</Button>
+                      <Button size="sm" onClick={() => addToCart(p)}>
+                        Add
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
