@@ -10,9 +10,12 @@ import { getCurrentBuyer, logout, type BuyerAccount } from '@/lib/buyerAuth';
 import { PRODUCTS } from '@/lib/products';
 import { isFormConfigured, submitForecastRow } from '@/lib/forecastSubmit';
 import { Search } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Forecast = () => {
   const navigate = useNavigate();
+  const { t, direction } = useLanguage();
+  const tf = t.forecast;
   const [buyer, setBuyer] = useState<BuyerAccount | null>(null);
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<Record<string, number>>({});
@@ -44,11 +47,11 @@ const Forecast = () => {
     if (!buyer) return;
     const rows = Object.entries(selected);
     if (rows.length === 0) {
-      toast({ title: 'Select at least one product', variant: 'destructive' });
+      toast({ title: tf.selectOne, variant: 'destructive' });
       return;
     }
     if (rows.some(([, v]) => !v || v <= 0)) {
-      toast({ title: 'Enter a volume for every selected product', variant: 'destructive' });
+      toast({ title: tf.enterVolume, variant: 'destructive' });
       return;
     }
     setSubmitting(true);
@@ -64,12 +67,12 @@ const Forecast = () => {
         });
       }
       toast({
-        title: isFormConfigured() ? 'Forecast submitted' : 'Saved locally (Google Form not configured yet)',
-        description: `${rows.length} product${rows.length > 1 ? 's' : ''} sent.`,
+        title: isFormConfigured() ? tf.submitted : tf.savedLocally,
+        description: `${rows.length} ${tf.sent}`,
       });
       setSelected({});
     } catch (e: any) {
-      toast({ title: 'Submission failed', description: e.message, variant: 'destructive' });
+      toast({ title: tf.failed, description: e.message, variant: 'destructive' });
     } finally {
       setSubmitting(false);
     }
@@ -83,18 +86,18 @@ const Forecast = () => {
   if (!buyer) return null;
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-8">
+    <div dir={direction} className="min-h-screen bg-background p-4 md:p-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
-            <h1 className="text-3xl font-bold">Annual Volume Forecast</h1>
+            <h1 className="text-3xl font-bold">{tf.title}</h1>
             <p className="text-sm text-muted-foreground">
-              Logged in as <span className="font-medium">{buyer.companyName}</span> ({buyer.username})
+              {tf.loggedAs} <span className="font-medium">{buyer.companyName}</span> ({buyer.username})
             </p>
           </div>
           <div className="flex gap-2">
-            <Link to="/"><Button variant="outline">Site</Button></Link>
-            <Button variant="ghost" onClick={handleLogout}>Logout</Button>
+            <Link to="/"><Button variant="outline">{tf.site}</Button></Link>
+            <Button variant="ghost" onClick={handleLogout}>{tf.logout}</Button>
           </div>
         </div>
 
@@ -112,7 +115,7 @@ const Forecast = () => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search products or categories..."
+              placeholder={tf.search}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="pl-9"
@@ -139,7 +142,7 @@ const Forecast = () => {
                     <Input
                       type="number"
                       min={1}
-                      placeholder="Units / year"
+                      placeholder={tf.unitsYear}
                       value={selected[p.sku] || ''}
                       onChange={(e) => setVolume(p.sku, Number(e.target.value))}
                       className="w-32"
@@ -150,16 +153,16 @@ const Forecast = () => {
             );
           })}
           {filtered.length === 0 && (
-            <p className="text-center text-sm text-muted-foreground py-8">No products match your search.</p>
+            <p className="text-center text-sm text-muted-foreground py-8">{tf.noMatch}</p>
           )}
         </Card>
 
         <div className="flex items-center justify-between flex-wrap gap-4">
           <p className="text-sm text-muted-foreground">
-            {Object.keys(selected).length} product{Object.keys(selected).length !== 1 ? 's' : ''} selected
+            {Object.keys(selected).length} {tf.selected}
           </p>
           <Button onClick={handleSubmit} disabled={submitting} size="lg">
-            {submitting ? 'Submitting...' : 'Submit forecast'}
+            {submitting ? tf.submitting : tf.submit}
           </Button>
         </div>
       </div>
