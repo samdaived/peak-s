@@ -115,6 +115,7 @@ const Prices = () => {
         phone: phone || null,
         notes: notes || null,
         total: cartTotal,
+        status: 'submitted',
       })
       .select()
       .single();
