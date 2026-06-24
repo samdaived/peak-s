@@ -4,28 +4,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 
-const copy = {
-  en: { title: 'Buyer Portal', subtitle: 'Peak Nutrition Health & Wellness', email: 'Email', password: 'Password', company: 'Company name', signin: 'Sign in', signup: 'Create account', back: '← Back to site' },
-  fr: { title: 'Portail Acheteur', subtitle: 'Peak Nutrition', email: 'Email', password: 'Mot de passe', company: "Nom de l'entreprise", signin: 'Se connecter', signup: 'Créer un compte', back: '← Retour au site' },
-  ar: { title: 'بوابة المشتري', subtitle: 'بيك نيوتريشن', email: 'البريد الإلكتروني', password: 'كلمة المرور', company: 'اسم الشركة', signin: 'تسجيل الدخول', signup: 'إنشاء حساب', back: '← العودة' },
-};
-
 const Login = () => {
   const navigate = useNavigate();
-  const { language, direction } = useLanguage();
-  const { signIn, signUp } = useAuth();
-  const c = copy[language] ?? copy.en;
+  const { direction, t } = useLanguage();
+  const { signIn } = useAuth();
+  const c = t.login;
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [company, setCompany] = useState('');
   const [busy, setBusy] = useState(false);
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -33,18 +25,9 @@ const Login = () => {
     setBusy(true);
     const { error } = await signIn(email, password);
     setBusy(false);
-    if (error) return toast({ title: 'Sign-in failed', description: error, variant: 'destructive' });
-    toast({ title: 'Welcome back!' });
+    if (error) return toast({ title: c.failed, description: error, variant: 'destructive' });
+    toast({ title: c.welcome });
     navigate('/prices');
-  };
-
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBusy(true);
-    const { error } = await signUp(email, password, company);
-    setBusy(false);
-    if (error) return toast({ title: 'Sign-up failed', description: error, variant: 'destructive' });
-    toast({ title: 'Account created — you can sign in now.' });
   };
 
   return (
