@@ -28,7 +28,7 @@ const Prices = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const { t, direction } = useLanguage();
-  const p = t.prices;
+  const tp = t.prices;
 
   const [products, setProducts] = useState<Product[]>([]);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
