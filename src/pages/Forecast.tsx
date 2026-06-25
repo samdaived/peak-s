@@ -1,16 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/hooks/use-toast';
-import { getCurrentBuyer, logout, type BuyerAccount } from '@/lib/buyerAuth';
+import { getCurrentBuyer, type BuyerAccount } from '@/lib/buyerAuth';
 import { PRODUCTS } from '@/lib/products';
 import { isFormConfigured, submitForecastRow } from '@/lib/forecastSubmit';
 import { Search } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+
 
 const Forecast = () => {
   const navigate = useNavigate();
@@ -78,28 +81,21 @@ const Forecast = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   if (!buyer) return null;
 
+
   return (
-    <div dir={direction} className="min-h-screen bg-background p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex items-center justify-between flex-wrap gap-4">
+    <div dir={direction} className="min-h-screen bg-background flex flex-col">
+      <Header />
+      <main className="flex-1 p-4 md:p-8 pt-24 md:pt-28">
+        <div className="max-w-4xl mx-auto space-y-6">
           <div>
             <h1 className="text-3xl font-bold">{tf.title}</h1>
             <p className="text-sm text-muted-foreground">
               {tf.loggedAs} <span className="font-medium">{buyer.companyName}</span> ({buyer.username})
             </p>
           </div>
-          <div className="flex gap-2">
-            <Link to="/"><Button variant="outline">{tf.site}</Button></Link>
-            <Button variant="ghost" onClick={handleLogout}>{tf.logout}</Button>
-          </div>
-        </div>
+
 
         {!isFormConfigured() && (
           <Card className="p-4 border-dashed border-amber-500/50 bg-amber-500/5 text-sm">
