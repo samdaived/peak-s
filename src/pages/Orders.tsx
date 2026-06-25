@@ -128,11 +128,12 @@ const Orders = () => {
               <TabsTrigger value="archive">{o.archive} ({archivedOrders.length})</TabsTrigger>
             </TabsList>
             <TabsContent value="active" className="space-y-4">
-              {renderOrders(activeOrders, true)}
+              {renderOrders(activeOrders)}
             </TabsContent>
             <TabsContent value="archive" className="space-y-4">
-              {renderOrders(archivedOrders, false)}
+              {renderOrders(archivedOrders)}
             </TabsContent>
+
           </Tabs>
         </div>
       </main>
