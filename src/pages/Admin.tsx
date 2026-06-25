@@ -392,8 +392,11 @@ const Admin = () => {
             </Card>
           </TabsContent>
         </Tabs>
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
+
   );
 };
 
