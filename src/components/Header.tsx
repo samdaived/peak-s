@@ -10,7 +10,7 @@ export const Header = () => {
   const { t, direction } = useLanguage();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
   const buyer = user ? { username: user.email?.split('@')[0] ?? 'user' } : null;
 
   const pricesLabel =
@@ -22,7 +22,9 @@ export const Header = () => {
     { label: t.nav.about, href: '/#about', internal: false },
     { label: t.nav.contact, href: '/#contact', internal: false },
     { label: pricesLabel, href: '/prices', internal: true },
+    ...(isAdmin ? [{ label: (t.nav as any).admin ?? 'Admin', href: '/admin', internal: true }] : []),
   ];
+
 
   const handleLogout = async () => {
     await signOut();
