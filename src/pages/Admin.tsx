@@ -168,7 +168,7 @@ const Admin = () => {
     });
   };
 
-  const handleSignOut = async () => { await signOut(); navigate('/'); };
+  
 
   const statusLabel = (s: string) => (t.status as any)[s.toLowerCase()] ?? s;
 
