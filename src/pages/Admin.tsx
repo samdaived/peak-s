@@ -286,18 +286,15 @@ const Admin = () => {
   };
 
   return (
-    <div dir={direction} className="min-h-screen bg-background p-4 md:p-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex items-center justify-between">
+    <div dir={direction} className="min-h-screen bg-background flex flex-col">
+      <Header />
+      <main className="flex-1 p-4 md:p-8 pt-24 md:pt-28">
+        <div className="max-w-6xl mx-auto space-y-8">
           <div>
             <h1 className="text-3xl font-bold">{ta.title}</h1>
             <p className="text-sm text-muted-foreground">{ta.subtitle}</p>
           </div>
-          <div className="flex gap-2">
-            <Link to="/"><Button variant="outline">{ta.site}</Button></Link>
-            <Button variant="outline" onClick={handleSignOut}>{ta.signOut}</Button>
-          </div>
-        </div>
+
 
         <Tabs defaultValue="products">
           <TabsList>
