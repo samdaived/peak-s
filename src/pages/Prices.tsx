@@ -90,8 +90,8 @@ const Prices = () => {
     setCart((c) => ({
       ...c,
       [p.id]: c[p.id]
-        ? { ...c[p.id], quantity: c[p.id].quantity + 1 }
-        : { product: p, quantity: 1, date_needed: '' },
+        ? { ...c[p.id], quantity: c[p.id].quantity + 1000 }
+        : { product: p, quantity: 1000, date_needed: '' },
     }));
     toast({ title: `${p.name} ${tp.added}` });
   };
@@ -112,6 +112,19 @@ const Prices = () => {
 
   const submitOrder = async () => {
     if (!user || cartItems.length === 0) return;
+    if (!profileComplete) {
+      toast({ title: (tp as any).profileIncomplete, variant: 'destructive' });
+      navigate('/profile?redirect=/prices');
+      return;
+    }
+    if (cartItems.some((l) => !l.date_needed)) {
+      toast({ title: (t.orders as any).neededBy + ' *', variant: 'destructive' });
+      return;
+    }
+    if (cartItems.some((l) => l.quantity < 1000)) {
+      toast({ title: (tp as any).minQty, variant: 'destructive' });
+      return;
+    }
     setSubmitting(true);
     const { data: order, error: orderErr } = await supabase
       .from('orders')
