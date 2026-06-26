@@ -8,6 +8,7 @@ export const translations = {
       about: 'À Propos',
       contact: 'Contact',
       admin: 'Admin',
+      profile: 'Profil',
     },
 
     hero: {
@@ -218,6 +219,7 @@ export const translations = {
       about: 'من نحن',
       contact: 'اتصل بنا',
       admin: 'الإدارة',
+      profile: 'الملف الشخصي',
     },
 
     hero: {
@@ -428,6 +430,7 @@ export const translations = {
       about: 'About',
       contact: 'Contact',
       admin: 'Admin',
+      profile: 'Profile',
     },
 
     hero: {
