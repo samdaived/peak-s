@@ -36,13 +36,15 @@ const Prices = () => {
   const [showCart, setShowCart] = useState(false);
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [ice, setIce] = useState('');
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
+  const profileComplete = !!(companyName.trim() && ice.trim() && phone.trim() && address.trim());
+
   useEffect(() => {
     const load = async () => {
-      // Products come from your custom Supabase edge function.
-      // The function should return either an array of products or { products: Product[] }.
       const { data, error } = await callEdgeFunction<Product[] | { products: Product[] }>(
         'database-access',
       );
@@ -54,14 +56,15 @@ const Prices = () => {
       }
 
       if (user) {
-        // TODO: replace with your own edge function once it's ready.
         try {
           const { data: favs } = await supabase.from('favorites').select('product_id').eq('user_id', user.id);
           setFavorites(new Set((favs ?? []).map((f: any) => f.product_id)));
-          const { data: profile } = await supabase.from('profiles').select('phone, shipping_address').eq('id', user.id).maybeSingle();
+          const { data: profile } = await supabase.from('profiles').select('phone, shipping_address, company_name, ice').eq('id', user.id).maybeSingle();
           if (profile) {
-            setPhone(profile.phone ?? '');
-            setAddress(profile.shipping_address ?? '');
+            setPhone((profile as any).phone ?? '');
+            setAddress((profile as any).shipping_address ?? '');
+            setCompanyName((profile as any).company_name ?? '');
+            setIce((profile as any).ice ?? '');
           }
         } catch {
           /* tables not created yet — ignore */
