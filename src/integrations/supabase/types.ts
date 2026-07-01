@@ -39,6 +39,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      companies: {
+        Row: {
+          city: string
+          created_at: string
+          ice: string
+          id: string
+          name: string
+          office_address: string
+          phone: string
+          rc: string
+          storage_office: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          city?: string
+          created_at?: string
+          ice?: string
+          id?: string
+          name?: string
+          office_address: string
+          phone: string
+          rc?: string
+          storage_office: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          ice?: string
+          id?: string
+          name?: string
+          office_address?: string
+          phone?: string
+          rc?: string
+          storage_office?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "companies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       favorites: {
         Row: {
           created_at: string | null
@@ -215,39 +265,44 @@ export type Database = {
       }
       profiles: {
         Row: {
-          company_name: string
+          avatar_url: string | null
+          company: string | null
           created_at: string | null
           email: string | null
           full_name: string | null
-          ice: string | null
           id: string
           phone: string | null
-          shipping_address: string | null
           updated_at: string | null
         }
         Insert: {
-          company_name: string
+          avatar_url?: string | null
+          company?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
-          ice?: string | null
           id?: string
           phone?: string | null
-          shipping_address?: string | null
           updated_at?: string | null
         }
         Update: {
-          company_name?: string
+          avatar_url?: string | null
+          company?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
-          ice?: string | null
           id?: string
           phone?: string | null
-          shipping_address?: string | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_company_fkey"
+            columns: ["company"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

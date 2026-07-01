@@ -1,12 +1,3 @@
-// Client for the user's OWN Supabase project (NOT Lovable Cloud).
-//
-// Setup:
-//   1. Copy `.env.example` to `.env.local`
-//   2. Paste your project's anon (publishable) key as VITE_CUSTOM_SUPABASE_ANON_KEY
-//   3. Restart the dev server
-//
-// The URL is hardcoded to the project you provided. Change it here if needed.
-
 import { createClient } from "@supabase/supabase-js";
 
 export const CUSTOM_SUPABASE_URL =
