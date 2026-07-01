@@ -36,7 +36,17 @@ export const translations = {
       benefit1: "Maintien d'une ossature normale",
       benefit2: "Fonction musculaire normale",
       benefit3: "Absorption du calcium optimisée",
-    },
+      upcomingTitle: "Produits à venir",
+      upcomingSubtitle: "Découvrez nos prochaines nouveautés en préparation",
+      upcomingList: [
+        { name: "Neovit Multivitamines", category: "Complément" },
+        { name: "Neovit Oméga-3", category: "Complément" },
+        { name: "Neovit Magnésium+", category: "Complément" },
+        { name: "Neovit Vitamine C", category: "Complément" },
+        { name: "Neovit Probiotiques", category: "Digestion" },
+        { name: "Neovit Zinc", category: "Immunité" },
+      ],
+
     about: {
       title: "À Propos de Peak Nutrition",
       subtitle: "Health & Wellness",
@@ -312,7 +322,17 @@ export const translations = {
       benefit1: "الحفاظ على صحة العظام",
       benefit2: "وظيفة العضلات الطبيعية",
       benefit3: "امتصاص محسن للكالسيوم",
-    },
+      upcomingTitle: "منتجات قادمة",
+      upcomingSubtitle: "اكتشف منتجاتنا الجديدة القادمة قريبًا",
+      upcomingList: [
+        { name: "نيوفيت متعدد الفيتامينات", category: "مكمل" },
+        { name: "نيوفيت أوميغا-3", category: "مكمل" },
+        { name: "نيوفيت ماغنسيوم+", category: "مكمل" },
+        { name: "نيوفيت فيتامين ج", category: "مكمل" },
+        { name: "نيوفيت بروبيوتيك", category: "الهضم" },
+        { name: "نيوفيت زنك", category: "المناعة" },
+      ],
+
     about: {
       title: "عن بيك نيوتريشن",
       subtitle: "الصحة والعافية",
@@ -584,7 +604,17 @@ export const translations = {
       benefit1: "Maintains normal bone health",
       benefit2: "Normal muscle function",
       benefit3: "Optimized calcium absorption",
-    },
+      upcomingTitle: "Upcoming Products",
+      upcomingSubtitle: "Preview our next line of products coming soon",
+      upcomingList: [
+        { name: "Neovit Multivitamin", category: "Supplement" },
+        { name: "Neovit Omega-3", category: "Supplement" },
+        { name: "Neovit Magnesium+", category: "Supplement" },
+        { name: "Neovit Vitamin C", category: "Supplement" },
+        { name: "Neovit Probiotics", category: "Digestion" },
+        { name: "Neovit Zinc", category: "Immunity" },
+      ],
+
     about: {
       title: "About Peak Nutrition",
       subtitle: "Health & Wellness",
