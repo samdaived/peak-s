@@ -152,9 +152,9 @@
   }
 
   .glass-card {
-    background: hsl(0 0% 100% / 0.8);
+    background: hsl(var(--background) / 0.8);
     backdrop-filter: blur(12px);
-    border: 1px solid hsl(180 20% 88% / 0.5);
+    border: 1px solid hsl(var(--border) / 0.5);
   }
 
   .animate-float {

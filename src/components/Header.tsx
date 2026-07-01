@@ -1,35 +1,55 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { LanguageSwitcher } from './LanguageSwitcher';
-import { Menu, X, LogIn, LogOut, User } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { cn } from "@/lib/utils";
+import { LogIn, LogOut, Menu, User, X } from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Header = () => {
   const { t, direction } = useLanguage();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, signOut, isAdmin } = useAuth();
-  const buyer = user ? { username: user.email?.split('@')[0] ?? 'user' } : null;
+  const buyer = user ? { username: user.email?.split("@")[0] ?? "user" } : null;
 
   const pricesLabel =
-    t.nav.products === 'Produits' ? 'Tarifs' : t.nav.products === 'المنتجات' ? 'الأسعار' : 'Prices';
+    t.nav.products === "Produits"
+      ? "Tarifs"
+      : t.nav.products === "المنتجات"
+        ? "الأسعار"
+        : "Prices";
 
   const navItems = [
-    { label: t.nav.home, href: '/#home', internal: false },
-    { label: t.nav.products, href: '/#products', internal: false },
-    { label: t.nav.about, href: '/#about', internal: false },
-    { label: t.nav.contact, href: '/#contact', internal: false },
-    { label: pricesLabel, href: '/prices', internal: true },
-    ...(user ? [{ label: (t.nav as any).profile ?? 'Profile', href: '/profile', internal: true }] : []),
-    ...(isAdmin ? [{ label: (t.nav as any).admin ?? 'Admin', href: '/admin', internal: true }] : []),
+    { label: t.nav.home, href: "/#home", internal: false },
+    { label: t.nav.products, href: "/#products", internal: false },
+    { label: t.nav.about, href: "/#about", internal: false },
+    { label: t.nav.contact, href: "/#contact", internal: false },
+    { label: pricesLabel, href: "/prices", internal: true },
+    ...(user
+      ? [
+          {
+            label: (t.nav as any).profile ?? "Profile",
+            href: "/profile",
+            internal: true,
+          },
+        ]
+      : []),
+    ...(isAdmin
+      ? [
+          {
+            label: (t.nav as any).admin ?? "Admin",
+            href: "/admin",
+            internal: true,
+          },
+        ]
+      : []),
   ];
-
 
   const handleLogout = async () => {
     await signOut();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -37,13 +57,19 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2">
+          <a href="/#home" className="flex items-center gap-2">
             <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-soft">
-              <span className="text-primary-foreground font-bold text-lg">PN</span>
+              <span className="text-primary-foreground font-bold text-lg">
+                PN
+              </span>
             </div>
             <div className="hidden sm:block">
-              <p className="font-semibold text-foreground leading-tight">Peak Nutrition</p>
-              <p className="text-xs text-muted-foreground">Health &amp; Wellness</p>
+              <p className="font-semibold text-foreground leading-tight">
+                Peak Nutrition
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Health &amp; Wellness
+              </p>
             </div>
           </a>
 
@@ -66,7 +92,7 @@ export const Header = () => {
                 >
                   {item.label}
                 </a>
-              )
+              ),
             )}
           </nav>
 
@@ -75,6 +101,7 @@ export const Header = () => {
             <div className="hidden sm:block">
               <LanguageSwitcher />
             </div>
+            <ThemeToggle className="hidden sm:inline-flex" />
 
             {buyer ? (
               <div className="hidden md:flex items-center gap-3">
@@ -88,7 +115,6 @@ export const Header = () => {
                   title={t.footer.logout}
                 >
                   <LogOut size={16} />
-                  <span>{t.footer.logout}</span>
                 </button>
               </div>
             ) : (
@@ -113,8 +139,8 @@ export const Header = () => {
         {/* Mobile Menu */}
         <div
           className={cn(
-            'md:hidden overflow-hidden transition-all duration-300',
-            isMenuOpen ? 'max-h-80 pb-4' : 'max-h-0'
+            "md:hidden overflow-hidden transition-all duration-300",
+            isMenuOpen ? "max-h-80 pb-4" : "max-h-0",
           )}
         >
           <nav className="flex flex-col gap-2">
@@ -137,7 +163,7 @@ export const Header = () => {
                 >
                   {item.label}
                 </a>
-              )
+              ),
             )}
 
             {buyer ? (
@@ -168,8 +194,9 @@ export const Header = () => {
               </Link>
             )}
 
-            <div className="px-4 pt-2">
+            <div className="px-4 pt-2 flex items-center gap-2">
               <LanguageSwitcher />
+              <ThemeToggle />
             </div>
           </nav>
         </div>

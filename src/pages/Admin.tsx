@@ -1,3 +1,4 @@
+import { AdminUsers } from "@/components/AdminUsers";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -85,43 +86,40 @@ const Admin = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
-  const load = async () => {
-    const [{ data: p }, { data: o }, { data: f }] = await Promise.all([
-      supabase.from("products").select("*").order("sku"),
-      supabase
-        .from("orders")
-        .select(
-          "*, order_items(*, products(name, sku)), profiles(company_name,email)",
-        )
-        .order("created_at", { ascending: false }),
-      supabase
-        .from("favorites")
-        .select(
-          "user_id, product_id, created_at, products(name, sku), profiles(company_name, email)",
-        ),
-    ]);
+  const [activeTab, setActiveTab] = useState<string>("products");
+  const [loaded, setLoaded] = useState<Record<string, boolean>>({});
+
+  const loadProducts = async () => {
+    const { data: p } = await supabase.from("products").select("*").order("sku");
     setProducts((p as Product[]) ?? []);
+    setLoaded((l) => ({ ...l, products: true }));
+  };
 
+  const loadOrders = async () => {
+    const { data: o } = await supabase
+      .from("orders")
+      .select(
+        "*, order_items(*, products(name, sku)), profiles!orders_user_id_fkey1(company(name),email)",
+      )
+      .order("created_at", { ascending: false });
     const orderRows = ((o as any[]) ?? []) as Order[];
-    const favRows = (f as any[]) ?? [];
-
-    const userIds = Array.from(
-      new Set(
-        [
-          ...orderRows.map((r) => r.user_id),
-          ...favRows.map((r) => r.user_id),
-        ].filter(Boolean),
-      ),
-    );
-
     setOrders(
       orderRows.map((row: any) => ({
         ...row,
         email: row.profiles?.email ?? null,
-        company_name: row.profiles?.company_name ?? null,
+        company_name: row.profiles?.company?.name ?? null,
       })),
     );
+    setLoaded((l) => ({ ...l, orders: true, archive: true }));
+  };
 
+  const loadFavorites = async () => {
+    const { data: f } = await supabase
+      .from("favorites")
+      .select(
+        "user_id, product_id, created_at, products(name, sku), profiles(company(name), email)",
+      );
+    const favRows = (f as any[]) ?? [];
     const grouped = new Map<string, FavoriteRow>();
     favRows.forEach((row) => {
       const key = row.product_id;
@@ -135,7 +133,7 @@ const Admin = () => {
       }
       grouped.get(key)!.buyers.push({
         user_id: row.user_id,
-        company_name: row.profiles?.company_name ?? null,
+        company_name: row.profiles?.company?.name ?? null,
         email: row.profiles?.email ?? null,
         created_at: row.created_at,
       });
@@ -143,11 +141,16 @@ const Admin = () => {
     setFavorites(
       [...grouped.values()].sort((a, b) => b.buyers.length - a.buyers.length),
     );
+    setLoaded((l) => ({ ...l, favorites: true }));
   };
 
   useEffect(() => {
-    load();
-  }, []);
+    if (activeTab === "products" && !loaded.products) loadProducts();
+    else if ((activeTab === "orders" || activeTab === "archive") && !loaded.orders)
+      loadOrders();
+    else if (activeTab === "favorites" && !loaded.favorites) loadFavorites();
+    // users tab self-loads in AdminUsers
+  }, [activeTab, loaded.products, loaded.orders, loaded.favorites]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,7 +173,7 @@ const Admin = () => {
     toast({ title: editingId ? ta.productUpdated : ta.productAdded });
     setForm(empty);
     setEditingId(null);
-    load();
+    loadProducts();
   };
 
   const handleEdit = (p: Product) => {
@@ -193,7 +196,7 @@ const Admin = () => {
         description: error.message,
         variant: "destructive",
       });
-    load();
+    loadProducts();
   };
 
   const handleStatusChange = async (id: string, status: string) => {
@@ -208,7 +211,7 @@ const Admin = () => {
         variant: "destructive",
       });
     toast({ title: ta.statusUpdated });
-    load();
+    loadOrders();
   };
 
   const toggleExpand = (id: string) => {
@@ -422,7 +425,7 @@ const Admin = () => {
             <p className="text-sm text-muted-foreground">{ta.subtitle}</p>
           </div>
 
-          <Tabs defaultValue="products">
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList>
               <TabsTrigger value="products">
                 {ta.products} ({products.length})
@@ -436,6 +439,7 @@ const Admin = () => {
               <TabsTrigger value="favorites">
                 {ta.favorites} ({favorites.length})
               </TabsTrigger>
+              <TabsTrigger value="users">{ta.users ?? "Users"}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="products" className="space-y-6">
@@ -624,6 +628,10 @@ const Admin = () => {
                   </Table>
                 )}
               </Card>
+            </TabsContent>
+
+            <TabsContent value="users">
+              <AdminUsers />
             </TabsContent>
           </Tabs>
         </div>
