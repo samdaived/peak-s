@@ -1,4 +1,7 @@
+import { AdminCompanies } from "@/components/AdminCompanies";
+import { AdminReports } from "@/components/AdminReports";
 import { AdminUsers } from "@/components/AdminUsers";
+
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -77,7 +80,7 @@ type FavoriteRow = {
 
 const Admin = () => {
   const { t, direction } = useLanguage();
-  const ta = t.admin;
+  const ta: any = t.admin;
 
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -440,7 +443,10 @@ const Admin = () => {
                 {ta.favorites} ({favorites.length})
               </TabsTrigger>
               <TabsTrigger value="users">{ta.users ?? "Users"}</TabsTrigger>
+              <TabsTrigger value="companies">{ta.companies ?? "Companies"}</TabsTrigger>
+              <TabsTrigger value="reports">{ta.reports ?? "Reports"}</TabsTrigger>
             </TabsList>
+
 
             <TabsContent value="products" className="space-y-6">
               <Card className="p-6">
@@ -633,7 +639,16 @@ const Admin = () => {
             <TabsContent value="users">
               <AdminUsers />
             </TabsContent>
+
+            <TabsContent value="companies">
+              <AdminCompanies />
+            </TabsContent>
+
+            <TabsContent value="reports">
+              <AdminReports />
+            </TabsContent>
           </Tabs>
+
         </div>
       </main>
       <Footer />

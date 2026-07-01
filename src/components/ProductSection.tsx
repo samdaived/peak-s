@@ -1,7 +1,8 @@
 import productImage from "@/assets/neovit-product.jpeg";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Check, Leaf, Pill, Scale } from "lucide-react";
+import { Check, Clock, Leaf, Pill, Scale, Sparkles } from "lucide-react";
+
 
 export const ProductSection = () => {
   const { t, direction } = useLanguage();
@@ -121,7 +122,62 @@ export const ProductSection = () => {
             </div>
           </div>
         </div>
+
+        {/* Upcoming Products */}
+        <div className="max-w-5xl mx-auto mt-20 md:mt-28">
+          <div className="text-center mb-10">
+            <Badge
+              variant="secondary"
+              className="mb-4 gradient-gold text-secondary-foreground shadow-gold"
+            >
+              <Clock className="w-3.5 h-3.5 mr-1" />
+              {(t.product as any).upcomingTitle}
+            </Badge>
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              {(t.product as any).upcomingTitle}
+            </h3>
+            <p className="text-muted-foreground text-sm md:text-base">
+              {(t.product as any).upcomingSubtitle}
+            </p>
+          </div>
+
+          <div className="glass-card rounded-2xl overflow-hidden shadow-card">
+            <ul className="divide-y divide-border/60">
+              {((t.product as any).upcomingList as { name: string; category: string }[]).map(
+                (item, i) => (
+                  <li
+                    key={i}
+                    className={`group flex items-center justify-between gap-4 px-5 md:px-8 py-4 transition-all duration-300 hover:bg-primary/5 hover:pl-6 md:hover:pl-10 ${
+                      i % 2 === 0 ? "bg-background/40" : "bg-muted/30"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4 min-w-0">
+                      <span className="flex-shrink-0 w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
+                        <Sparkles className="w-5 h-5 text-primary-foreground" />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-foreground truncate">
+                          {item.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.category}
+                        </p>
+                      </div>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className="text-xs opacity-70 group-hover:opacity-100 group-hover:border-primary/60 transition-all"
+                    >
+                      {direction === "rtl" ? "قريبًا" : "Soon"}
+                    </Badge>
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   );
 };
+

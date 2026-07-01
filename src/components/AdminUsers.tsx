@@ -79,6 +79,50 @@ export const AdminUsers = () => {
   const [newCompany, setNewCompany] = useState<CompanyState>(emptyCompany);
   const [creating, setCreating] = useState(false);
 
+  // new user signup form
+  const [signupOpen, setSignupOpen] = useState(false);
+  const [newUser, setNewUser] = useState({
+    email: "",
+    password: "",
+    full_name: "",
+    phone: "",
+  });
+  const [signingUp, setSigningUp] = useState(false);
+
+  const signupUser = async () => {
+    if (!newUser.email.trim() || !newUser.password.trim()) {
+      return toast({
+        title: ta.error,
+        description: ta.emailPasswordRequired ?? "Email and password required",
+        variant: "destructive",
+      });
+    }
+    setSigningUp(true);
+    const { error } = await supabase.auth.signUp({
+      email: newUser.email.trim(),
+      password: newUser.password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+        data: {
+          full_name: newUser.full_name.trim(),
+          phone: newUser.phone.trim(),
+        },
+      },
+    });
+    setSigningUp(false);
+    if (error)
+      return toast({
+        title: ta.error,
+        description: error.message,
+        variant: "destructive",
+      });
+    toast({ title: ta.userCreated ?? "User created" });
+    setSignupOpen(false);
+    setNewUser({ email: "", password: "", full_name: "", phone: "" });
+    await loadAll();
+  };
+
+
   const userDirty = useMemo(
     () => JSON.stringify(userForm) !== JSON.stringify(userOriginal),
     [userForm, userOriginal],
@@ -262,24 +306,92 @@ export const AdminUsers = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="p-6 space-y-2">
-        <Label>{ta.selectUser}</Label>
-        <div className="max-w-md">
-          <Select value={selectedUserId} onValueChange={pickUser}>
-            <SelectTrigger>
-              <SelectValue placeholder={ta.selectUser} />
-            </SelectTrigger>
-            <SelectContent>
-              {profiles.map((p) => (
-                <SelectItem key={p.id} value={p.id}>
-                  {p.email ?? p.id.slice(0, 8)}
-                  {p.full_name ? ` — ${p.full_name}` : ""}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      <Card className="p-6 space-y-4">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex-1 min-w-[240px] space-y-2">
+            <Label>{ta.selectUser}</Label>
+            <Select value={selectedUserId} onValueChange={pickUser}>
+              <SelectTrigger>
+                <SelectValue placeholder={ta.selectUser} />
+              </SelectTrigger>
+              <SelectContent>
+                {profiles.map((p) => (
+                  <SelectItem key={p.id} value={p.id}>
+                    {p.email ?? p.id.slice(0, 8)}
+                    {p.full_name ? ` — ${p.full_name}` : ""}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button variant="outline" onClick={() => setSignupOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            {ta.signUpUser ?? "Sign up user"}
+          </Button>
         </div>
       </Card>
+
+      {signupOpen && (
+        <Card className="p-6 space-y-4 border-primary/50">
+          <h3 className="font-semibold">{ta.newUser ?? "New user"}</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>{tp.email}</Label>
+              <Input
+                type="email"
+                value={newUser.email}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, email: e.target.value }))
+                }
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{(t as any).login?.password ?? "Password"}</Label>
+              <Input
+                type="password"
+                value={newUser.password}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, password: e.target.value }))
+                }
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{tp.fullName}</Label>
+              <Input
+                value={newUser.full_name}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, full_name: e.target.value }))
+                }
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{tp.phone}</Label>
+              <Input
+                value={newUser.phone}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, phone: e.target.value }))
+                }
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setSignupOpen(false);
+                setNewUser({ email: "", password: "", full_name: "", phone: "" });
+              }}
+              disabled={signingUp}
+            >
+              {tp.cancel}
+            </Button>
+            <Button onClick={signupUser} disabled={signingUp}>
+              {signingUp ? tp.saving : ta.create ?? "Create"}
+            </Button>
+          </div>
+        </Card>
+      )}
+
 
       {selectedUserId && (
         <>
