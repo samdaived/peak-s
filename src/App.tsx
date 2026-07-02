@@ -11,6 +11,8 @@ import Forecast from "./pages/Forecast";
 import Prices from "./pages/Prices";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
+import Reports from "./pages/Reports";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -35,6 +37,8 @@ const App = () => (
               <Route path="/prices" element={<ProtectedRoute><Prices /></ProtectedRoute>} />
               <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

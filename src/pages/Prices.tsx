@@ -272,7 +272,7 @@ const Prices = () => {
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold">{tp.title}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold">{(t.nav as any).placeOrder ?? tp.title}</h1>
               <p className="text-sm text-muted-foreground">{user?.email}</p>
             </div>
             <div className="flex gap-2">
