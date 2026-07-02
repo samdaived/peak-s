@@ -31,20 +31,16 @@ export const Header = () => {
   const { user, signOut, isAdmin } = useAuth();
   const buyer = user ? { username: user.email?.split("@")[0] ?? "user" } : null;
 
-  const pricesLabel =
-    t.nav.products === "Produits"
-      ? "Tarifs"
-      : t.nav.products === "المنتجات"
-        ? "الأسعار"
-        : "Prices";
+  const placeOrderLabel = (t.nav as any).placeOrder ?? "Place an order";
 
   const navItems = [
     { label: t.nav.home, href: "/#home", internal: false },
     { label: t.nav.products, href: "/#products", internal: false },
     { label: t.nav.about, href: "/#about", internal: false },
     { label: t.nav.contact, href: "/#contact", internal: false },
-    { label: pricesLabel, href: "/prices", internal: true },
+    { label: placeOrderLabel, href: "/prices", internal: true },
   ];
+
 
   const handleLogout = async () => {
     await signOut();
@@ -53,7 +49,7 @@ export const Header = () => {
 
   const profileLabel = (t.nav as any).profile ?? "Profile";
   const adminLabel = (t.nav as any).admin ?? "Admin";
-  const reportsLabel = (t.orders as any).reports ?? "Reports";
+  const reportsLabel = (t.nav as any).myReports ?? "My orders / Reports";
   const logoutLabel = t.footer.logout;
 
   return (
@@ -132,7 +128,7 @@ export const Header = () => {
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuItem
-                      onClick={() => navigate("/orders?tab=reports")}
+                      onClick={() => navigate("/reports")}
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       {reportsLabel}
@@ -219,7 +215,7 @@ export const Header = () => {
                   </Link>
                 )}
                 <Link
-                  to="/orders?tab=reports"
+                  to="/reports"
                   onClick={() => setIsMenuOpen(false)}
                   className="flex items-center gap-2 px-2 py-2 text-sm hover:bg-accent rounded-lg"
                 >

@@ -9,7 +9,10 @@ export const translations = {
       contact: "Contact",
       admin: "Admin",
       profile: "Profil",
+      placeOrder: "Passer une commande",
+      myReports: "Mes commandes / Signalements",
     },
+
 
     hero: {
       tagline: "Votre Partenaire Santé",
@@ -298,7 +301,10 @@ export const translations = {
       contact: "اتصل بنا",
       admin: "الإدارة",
       profile: "الملف الشخصي",
+      placeOrder: "تقديم طلب",
+      myReports: "طلباتي / البلاغات",
     },
+
 
     hero: {
       tagline: "شريكك في الصحة",
@@ -581,7 +587,10 @@ export const translations = {
       contact: "Contact",
       admin: "Admin",
       profile: "Profile",
+      placeOrder: "Place an order",
+      myReports: "My orders / Reports",
     },
+
 
     hero: {
       tagline: "Your Health Partner",
