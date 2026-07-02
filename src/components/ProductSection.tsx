@@ -170,7 +170,7 @@ export const ProductSection = () => {
             <p className="text-muted-foreground text-sm md:text-base">{tp.upcomingSubtitle}</p>
           </div>
 
-          <div className="glass-card rounded-2xl overflow-hidden shadow-card">
+          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[20vh] overflow-y-auto">
             {loading ? (
               <p className="text-center text-muted-foreground py-10">{tp.loading}</p>
             ) : products.length === 0 ? (
