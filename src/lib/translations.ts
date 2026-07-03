@@ -396,6 +396,7 @@ export const translations = {
       statuses: {
         collecting_legal_papers: "جمع الوثائق القانونية",
         submitted: "تم التقديم",
+        in_progress: "قيد التنفيذ",
         dmp_in_progress: "DMP قيد التنفيذ",
         dmp_certified: "DMP معتمد",
         ordered: "تم الطلب",
