@@ -74,6 +74,7 @@ export const translations = {
       statuses: {
         collecting_legal_papers: "Collecte des documents légaux",
         submitted: "Soumis",
+        in_progress: "En cours",
         dmp_in_progress: "DMP en cours",
         dmp_certified: "DMP certifié",
         ordered: "Commandé",
