@@ -1,9 +1,8 @@
 import productImage from "@/assets/neovit-product.jpeg";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/lib/customSupabase";
 import { Award, Check, Factory, Leaf, Pill, Scale, Sparkles, Tag } from "lucide-react";
-import { useEffect, useState } from "react";
+import productsData from "@/data/products.json";
 
 type CatalogProduct = {
   id: string;
@@ -12,48 +11,108 @@ type CatalogProduct = {
   status: string | null;
 };
 
-// Progress weight per status (0-100) to render the progress bar
+const CATEGORY_KEY: Record<string, string> = {
+  "Daily Multivitamins": "daily_multivitamins",
+  "Immunity": "immunity",
+  "Bone Health": "bone_health",
+  "Magnesium & Muscle Health": "magnesium_muscle",
+  "Heart Health": "heart_health",
+  "Brain & Memory": "brain_memory",
+  "Sleep": "sleep",
+  "Stress Management": "stress_management",
+  "Men's Health": "mens_health",
+  "Women's Health": "womens_health",
+  "Hair, Skin & Nails": "hair_skin_nails",
+  "Beauty & Collagen": "beauty_collagen",
+  "Digestive Health": "digestive_health",
+  "Joint Health": "joint_health",
+  "Eye Health": "eye_health",
+  "Liver Health & Antioxidant": "liver_antioxidant",
+  "Children's Health": "childrens_health",
+  "Hydration & Electrolytes": "hydration_electrolytes",
+};
+
+const STATUS_KEY: Record<string, string> = {
+  "Collecting Legal Papers": "collecting_legal_papers",
+  "Submitted": "submitted",
+  "In progress": "in_progress",
+  "In Progress": "in_progress",
+  "DMP In Progress": "dmp_in_progress",
+  "DMP Certified": "dmp_certified",
+  "Ordered": "ordered",
+  "In Stock": "in_stock",
+};
+
 const STATUS_PROGRESS: Record<string, number> = {
-  collecting_legal_papers: 15,
-  submitted: 30,
-  dmp_in_progress: 50,
-  dmp_certified: 70,
-  ordered: 85,
+  collecting_legal_papers: 10,
+  submitted: 25,
+  in_progress: 45,
+  dmp_in_progress: 60,
+  dmp_certified: 75,
+  ordered: 90,
   in_stock: 100,
 };
 
-const STATUS_COLOR: Record<string, string> = {
-  collecting_legal_papers: "bg-muted-foreground",
-  submitted: "bg-blue-500",
-  dmp_in_progress: "bg-amber-500",
-  dmp_certified: "bg-teal-500",
-  ordered: "bg-indigo-500",
-  in_stock: "bg-emerald-500",
+const STATUS_STYLE: Record<string, { bar: string; pill: string; dot: string }> = {
+  collecting_legal_papers: {
+    bar: "bg-gradient-to-r from-slate-400 to-slate-500",
+    pill: "bg-slate-500/10 text-slate-600 dark:text-slate-300 ring-1 ring-slate-500/30",
+    dot: "bg-slate-500",
+  },
+  submitted: {
+    bar: "bg-gradient-to-r from-sky-400 to-blue-500",
+    pill: "bg-sky-500/10 text-sky-700 dark:text-sky-300 ring-1 ring-sky-500/30",
+    dot: "bg-sky-500",
+  },
+  in_progress: {
+    bar: "bg-gradient-to-r from-amber-400 to-orange-500",
+    pill: "bg-amber-500/10 text-amber-700 dark:text-amber-300 ring-1 ring-amber-500/30",
+    dot: "bg-amber-500",
+  },
+  dmp_in_progress: {
+    bar: "bg-gradient-to-r from-amber-400 to-orange-500",
+    pill: "bg-amber-500/10 text-amber-700 dark:text-amber-300 ring-1 ring-amber-500/30",
+    dot: "bg-amber-500",
+  },
+  dmp_certified: {
+    bar: "bg-gradient-to-r from-teal-400 to-cyan-500",
+    pill: "bg-teal-500/10 text-teal-700 dark:text-teal-300 ring-1 ring-teal-500/30",
+    dot: "bg-teal-500",
+  },
+  ordered: {
+    bar: "bg-gradient-to-r from-indigo-400 to-violet-500",
+    pill: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500/30",
+    dot: "bg-indigo-500",
+  },
+  in_stock: {
+    bar: "bg-gradient-to-r from-emerald-400 to-green-500",
+    pill: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-500/30",
+    dot: "bg-emerald-500",
+  },
+};
+
+const DEFAULT_STYLE = {
+  bar: "bg-primary",
+  pill: "bg-primary/10 text-primary ring-1 ring-primary/30",
+  dot: "bg-primary",
 };
 
 export const ProductSection = () => {
   const { t, direction } = useLanguage();
   const tp = t.product as any;
 
-  const [products, setProducts] = useState<CatalogProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const products: CatalogProduct[] = (productsData as any[])
+    .filter((p) => p.active !== false)
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: CATEGORY_KEY[p.category] ?? p.category ?? null,
+      status: STATUS_KEY[p.status] ?? p.status ?? null,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("id, name, category, status")
-        .eq("active", true)
-        .order("name", { ascending: true });
-      if (cancelled) return;
-      if (!error && data) setProducts(data as CatalogProduct[]);
-      setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const loading = false;
+
 
   const categoryLabel = (key: string | null) => {
     if (!key) return "";
@@ -170,7 +229,7 @@ export const ProductSection = () => {
             <p className="text-muted-foreground text-sm md:text-base">{tp.upcomingSubtitle}</p>
           </div>
 
-          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[20vh] overflow-y-auto">
+          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[60vh] md:max-h-[20vh] overflow-y-auto">
             {loading ? (
               <p className="text-center text-muted-foreground py-10">{tp.loading}</p>
             ) : products.length === 0 ? (
@@ -179,48 +238,51 @@ export const ProductSection = () => {
               <ul className="divide-y divide-border/60">
                 {products.map((p, i) => {
                   const progress = STATUS_PROGRESS[p.status ?? ""] ?? 0;
-                  const color = STATUS_COLOR[p.status ?? ""] ?? "bg-primary";
+                  const style = STATUS_STYLE[p.status ?? ""] ?? DEFAULT_STYLE;
                   const isDone = p.status === "in_stock";
                   return (
                     <li
                       key={p.id}
-                      className={`group flex flex-col md:flex-row md:items-center gap-3 md:gap-6 px-5 md:px-8 py-4 transition-all duration-300 hover:bg-primary/5 ${
-                        direction === "rtl"
-                          ? "hover:pr-6 md:hover:pr-10"
-                          : "hover:pl-6 md:hover:pl-10"
-                      } ${i % 2 === 0 ? "bg-background/40" : "bg-muted/30"}`}
+                      className={`group flex flex-col md:flex-row md:items-center gap-3 md:gap-6 px-4 md:px-8 py-4 transition-all duration-300 hover:bg-primary/5 ${
+                        i % 2 === 0 ? "bg-background/40" : "bg-muted/30"
+                      }`}
                     >
-                      <div className="flex items-center gap-4 min-w-0 md:w-2/5">
-                        <span className="flex-shrink-0 w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
-                          <Sparkles className="w-5 h-5 text-primary-foreground" />
+                      <div className="flex items-center gap-3 min-w-0 md:w-2/5">
+                        <span className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
+                          <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
                         </span>
-                        <div className="min-w-0">
-                          <p className="font-semibold text-foreground truncate">{p.name}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-foreground text-sm md:text-base line-clamp-2 md:truncate">{p.name}</p>
                           <p className="text-xs text-muted-foreground truncate">{categoryLabel(p.category)}</p>
                         </div>
                       </div>
 
-                      <div className="md:flex-1 md:px-4">
+                      <div className="md:flex-1 md:px-4 w-full">
                         <div className="h-1.5 rounded-full bg-border/60 overflow-hidden">
                           <div
-                            className={`h-full ${color} transition-all duration-500`}
+                            className={`h-full ${style.bar} transition-all duration-500`}
                             style={{ width: `${progress}%` }}
                           />
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 md:w-56 md:justify-end">
+                      <div className={`flex items-center md:w-56 ${direction === "rtl" ? "md:justify-start" : "md:justify-end"}`}>
                         <span
-                          className={`inline-block w-2 h-2 rounded-full ${color} ${
-                            !isDone ? "animate-pulse" : ""
-                          }`}
-                          aria-hidden
-                        />
-                        <span className="text-xs md:text-sm font-medium text-foreground">
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${style.pill}`}
+                        >
+                          <span className="relative flex h-2 w-2" aria-hidden>
+                            {!isDone && (
+                              <span
+                                className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping ${style.dot}`}
+                              />
+                            )}
+                            <span className={`relative inline-flex rounded-full h-2 w-2 ${style.dot}`} />
+                          </span>
                           {statusLabel(p.status)}
                         </span>
                       </div>
                     </li>
+
                   );
                 })}
               </ul>

@@ -74,6 +74,7 @@ export const translations = {
       statuses: {
         collecting_legal_papers: "Collecte des documents légaux",
         submitted: "Soumis",
+        in_progress: "En cours",
         dmp_in_progress: "DMP en cours",
         dmp_certified: "DMP certifié",
         ordered: "Commandé",
@@ -395,6 +396,7 @@ export const translations = {
       statuses: {
         collecting_legal_papers: "جمع الوثائق القانونية",
         submitted: "تم التقديم",
+        in_progress: "قيد التنفيذ",
         dmp_in_progress: "DMP قيد التنفيذ",
         dmp_certified: "DMP معتمد",
         ordered: "تم الطلب",
@@ -712,6 +714,7 @@ export const translations = {
       statuses: {
         collecting_legal_papers: "Collecting Legal Papers",
         submitted: "Submitted",
+        in_progress: "In Progress",
         dmp_in_progress: "DMP In Progress",
         dmp_certified: "DMP Certified",
         ordered: "Ordered",
