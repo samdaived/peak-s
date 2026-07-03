@@ -11,6 +11,7 @@ type CatalogProduct = {
   status: string | null;
 };
 
+
 const CATEGORY_KEY: Record<string, string> = {
   "Daily Multivitamins": "daily_multivitamins",
   "Immunity": "immunity",
@@ -98,18 +99,25 @@ const DEFAULT_STYLE = {
 };
 
 export const ProductSection = () => {
-  const { t, direction } = useLanguage();
+  const { t, direction, language } = useLanguage();
   const tp = t.product as any;
+
+  const nameFor = (p: any) => {
+    if (language === "fr") return p.name_fr ?? p.name;
+    if (language === "ar") return p.name_ar ?? p.name;
+    return p.name_en ?? p.name;
+  };
 
   const products: CatalogProduct[] = (productsData as any[])
     .filter((p) => p.active !== false)
     .map((p) => ({
       id: p.id,
-      name: p.name,
+      name: nameFor(p),
       category: CATEGORY_KEY[p.category] ?? p.category ?? null,
       status: STATUS_KEY[p.status] ?? p.status ?? null,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
+
 
   const loading = false;
 
@@ -229,7 +237,7 @@ export const ProductSection = () => {
             <p className="text-muted-foreground text-sm md:text-base">{tp.upcomingSubtitle}</p>
           </div>
 
-          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[60vh] md:max-h-[20vh] overflow-y-auto">
+          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[60vh] overflow-y-auto">
             {loading ? (
               <p className="text-center text-muted-foreground py-10">{tp.loading}</p>
             ) : products.length === 0 ? (
@@ -247,15 +255,16 @@ export const ProductSection = () => {
                         i % 2 === 0 ? "bg-background/40" : "bg-muted/30"
                       }`}
                     >
-                      <div className="flex items-center gap-3 min-w-0 md:w-2/5">
+                      <div className="flex items-start gap-3 min-w-0 w-full md:w-2/5">
                         <span className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
                           <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className="font-semibold text-foreground text-sm md:text-base line-clamp-2 md:truncate">{p.name}</p>
-                          <p className="text-xs text-muted-foreground truncate">{categoryLabel(p.category)}</p>
+                          <p className="font-semibold text-foreground text-sm md:text-base break-words md:truncate leading-snug">{p.name}</p>
+                          <p className="text-xs text-muted-foreground break-words md:truncate mt-0.5">{categoryLabel(p.category)}</p>
                         </div>
                       </div>
+
 
                       <div className="md:flex-1 md:px-4 w-full">
                         <div className="h-1.5 rounded-full bg-border/60 overflow-hidden">
