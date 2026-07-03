@@ -1,9 +1,8 @@
 import productImage from "@/assets/neovit-product.jpeg";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/lib/customSupabase";
 import { Award, Check, Factory, Leaf, Pill, Scale, Sparkles, Tag } from "lucide-react";
-import { useEffect, useState } from "react";
+import productsData from "@/data/products.json";
 
 type CatalogProduct = {
   id: string;
@@ -12,48 +11,108 @@ type CatalogProduct = {
   status: string | null;
 };
 
-// Progress weight per status (0-100) to render the progress bar
+const CATEGORY_KEY: Record<string, string> = {
+  "Daily Multivitamins": "daily_multivitamins",
+  "Immunity": "immunity",
+  "Bone Health": "bone_health",
+  "Magnesium & Muscle Health": "magnesium_muscle",
+  "Heart Health": "heart_health",
+  "Brain & Memory": "brain_memory",
+  "Sleep": "sleep",
+  "Stress Management": "stress_management",
+  "Men's Health": "mens_health",
+  "Women's Health": "womens_health",
+  "Hair, Skin & Nails": "hair_skin_nails",
+  "Beauty & Collagen": "beauty_collagen",
+  "Digestive Health": "digestive_health",
+  "Joint Health": "joint_health",
+  "Eye Health": "eye_health",
+  "Liver Health & Antioxidant": "liver_antioxidant",
+  "Children's Health": "childrens_health",
+  "Hydration & Electrolytes": "hydration_electrolytes",
+};
+
+const STATUS_KEY: Record<string, string> = {
+  "Collecting Legal Papers": "collecting_legal_papers",
+  "Submitted": "submitted",
+  "In progress": "in_progress",
+  "In Progress": "in_progress",
+  "DMP In Progress": "dmp_in_progress",
+  "DMP Certified": "dmp_certified",
+  "Ordered": "ordered",
+  "In Stock": "in_stock",
+};
+
 const STATUS_PROGRESS: Record<string, number> = {
-  collecting_legal_papers: 15,
-  submitted: 30,
-  dmp_in_progress: 50,
-  dmp_certified: 70,
-  ordered: 85,
+  collecting_legal_papers: 10,
+  submitted: 25,
+  in_progress: 45,
+  dmp_in_progress: 60,
+  dmp_certified: 75,
+  ordered: 90,
   in_stock: 100,
 };
 
-const STATUS_COLOR: Record<string, string> = {
-  collecting_legal_papers: "bg-muted-foreground",
-  submitted: "bg-blue-500",
-  dmp_in_progress: "bg-amber-500",
-  dmp_certified: "bg-teal-500",
-  ordered: "bg-indigo-500",
-  in_stock: "bg-emerald-500",
+const STATUS_STYLE: Record<string, { bar: string; pill: string; dot: string }> = {
+  collecting_legal_papers: {
+    bar: "bg-gradient-to-r from-slate-400 to-slate-500",
+    pill: "bg-slate-500/10 text-slate-600 dark:text-slate-300 ring-1 ring-slate-500/30",
+    dot: "bg-slate-500",
+  },
+  submitted: {
+    bar: "bg-gradient-to-r from-sky-400 to-blue-500",
+    pill: "bg-sky-500/10 text-sky-700 dark:text-sky-300 ring-1 ring-sky-500/30",
+    dot: "bg-sky-500",
+  },
+  in_progress: {
+    bar: "bg-gradient-to-r from-amber-400 to-orange-500",
+    pill: "bg-amber-500/10 text-amber-700 dark:text-amber-300 ring-1 ring-amber-500/30",
+    dot: "bg-amber-500",
+  },
+  dmp_in_progress: {
+    bar: "bg-gradient-to-r from-amber-400 to-orange-500",
+    pill: "bg-amber-500/10 text-amber-700 dark:text-amber-300 ring-1 ring-amber-500/30",
+    dot: "bg-amber-500",
+  },
+  dmp_certified: {
+    bar: "bg-gradient-to-r from-teal-400 to-cyan-500",
+    pill: "bg-teal-500/10 text-teal-700 dark:text-teal-300 ring-1 ring-teal-500/30",
+    dot: "bg-teal-500",
+  },
+  ordered: {
+    bar: "bg-gradient-to-r from-indigo-400 to-violet-500",
+    pill: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500/30",
+    dot: "bg-indigo-500",
+  },
+  in_stock: {
+    bar: "bg-gradient-to-r from-emerald-400 to-green-500",
+    pill: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-500/30",
+    dot: "bg-emerald-500",
+  },
+};
+
+const DEFAULT_STYLE = {
+  bar: "bg-primary",
+  pill: "bg-primary/10 text-primary ring-1 ring-primary/30",
+  dot: "bg-primary",
 };
 
 export const ProductSection = () => {
   const { t, direction } = useLanguage();
   const tp = t.product as any;
 
-  const [products, setProducts] = useState<CatalogProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const products: CatalogProduct[] = (productsData as any[])
+    .filter((p) => p.active !== false)
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: CATEGORY_KEY[p.category] ?? p.category ?? null,
+      status: STATUS_KEY[p.status] ?? p.status ?? null,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("id, name, category, status")
-        .eq("active", true)
-        .order("name", { ascending: true });
-      if (cancelled) return;
-      if (!error && data) setProducts(data as CatalogProduct[]);
-      setLoading(false);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const loading = false;
+
 
   const categoryLabel = (key: string | null) => {
     if (!key) return "";
