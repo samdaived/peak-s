@@ -229,7 +229,7 @@ export const ProductSection = () => {
             <p className="text-muted-foreground text-sm md:text-base">{tp.upcomingSubtitle}</p>
           </div>
 
-          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[20vh] overflow-y-auto">
+          <div className="glass-card rounded-2xl overflow-hidden shadow-card max-h-[60vh] md:max-h-[20vh] overflow-y-auto">
             {loading ? (
               <p className="text-center text-muted-foreground py-10">{tp.loading}</p>
             ) : products.length === 0 ? (
@@ -238,46 +238,50 @@ export const ProductSection = () => {
               <ul className="divide-y divide-border/60">
                 {products.map((p, i) => {
                   const progress = STATUS_PROGRESS[p.status ?? ""] ?? 0;
-                  const color = STATUS_COLOR[p.status ?? ""] ?? "bg-primary";
+                  const style = STATUS_STYLE[p.status ?? ""] ?? DEFAULT_STYLE;
                   const isDone = p.status === "in_stock";
                   return (
                     <li
                       key={p.id}
-                      className={`group flex flex-col md:flex-row md:items-center gap-3 md:gap-6 px-5 md:px-8 py-4 transition-all duration-300 hover:bg-primary/5 ${
-                        direction === "rtl"
-                          ? "hover:pr-6 md:hover:pr-10"
-                          : "hover:pl-6 md:hover:pl-10"
-                      } ${i % 2 === 0 ? "bg-background/40" : "bg-muted/30"}`}
+                      className={`group flex flex-col md:flex-row md:items-center gap-3 md:gap-6 px-4 md:px-8 py-4 transition-all duration-300 hover:bg-primary/5 ${
+                        i % 2 === 0 ? "bg-background/40" : "bg-muted/30"
+                      }`}
                     >
-                      <div className="flex items-center gap-4 min-w-0 md:w-2/5">
-                        <span className="flex-shrink-0 w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
-                          <Sparkles className="w-5 h-5 text-primary-foreground" />
+                      <div className="flex items-center gap-3 min-w-0 md:w-2/5">
+                        <span className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
+                          <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary-foreground" />
                         </span>
-                        <div className="min-w-0">
-                          <p className="font-semibold text-foreground truncate">{p.name}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-foreground text-sm md:text-base line-clamp-2 md:truncate">{p.name}</p>
                           <p className="text-xs text-muted-foreground truncate">{categoryLabel(p.category)}</p>
                         </div>
                       </div>
 
-                      <div className="md:flex-1 md:px-4">
+                      <div className="md:flex-1 md:px-4 w-full">
                         <div className="h-1.5 rounded-full bg-border/60 overflow-hidden">
                           <div
-                            className={`h-full ${color} transition-all duration-500`}
+                            className={`h-full ${style.bar} transition-all duration-500`}
                             style={{ width: `${progress}%` }}
                           />
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 md:w-56 md:justify-end">
+                      <div className={`flex items-center md:w-56 ${direction === "rtl" ? "md:justify-start" : "md:justify-end"}`}>
                         <span
-                          className={`inline-block w-2 h-2 rounded-full ${color} ${
-                            !isDone ? "animate-pulse" : ""
-                          }`}
-                          aria-hidden
-                        />
-                        <span className="text-xs md:text-sm font-medium text-foreground">
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${style.pill}`}
+                        >
+                          <span className="relative flex h-2 w-2" aria-hidden>
+                            {!isDone && (
+                              <span
+                                className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping ${style.dot}`}
+                              />
+                            )}
+                            <span className={`relative inline-flex rounded-full h-2 w-2 ${style.dot}`} />
+                          </span>
                           {statusLabel(p.status)}
                         </span>
+                      </div>
+
                       </div>
                     </li>
                   );
