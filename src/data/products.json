@@ -11,7 +11,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Melatonin 1.9mg tablets",
+    "name_fr": "Mélatonine 1.9mg comprimés",
+    "name_ar": "ميلاتونين 1.9mg أقراص"
   },
   {
     "id": "040296c7-49a2-4dcf-b153-469ff3357c81",
@@ -25,7 +28,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Omega-3 Premium (Fish oil 330 EPA 220 DHA 1000mg, Vit. D3 2000IU, Vit. K2 50μg, Vit. E 12mg) softgel",
+    "name_fr": "Oméga-3 premium (Huile de poisson 330 EPA 220 DHA 1000mg, Vit. D3 2000IU, Vit. K2 50μg, Vit. E 12mg) capsule molle",
+    "name_ar": "أوميغا-3 بريميوم (زيت السمك 330 EPA 220 DHA 1000mg, فيتامين D3 2000IU, فيتامين K2 50μg, فيتامين E 12mg) كبسولة هلامية"
   },
   {
     "id": "08a2b667-733d-45c8-9915-f76855b8e222",
@@ -39,7 +45,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Electrolytes complex (Sodium, Potassium, Chloride, Calcium, Magnesium) tablets",
+    "name_fr": "Complexe électrolytes (Sodium, Potassium, Chlorure, Calcium, Magnésium) comprimés",
+    "name_ar": "مركب الإلكتروليتات (صوديوم, بوتاسيوم, كلوريد, كالسيوم, مغنيسيوم) أقراص"
   },
   {
     "id": "10b3a026-11dd-40b6-a248-6f29569da750",
@@ -53,7 +62,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Brain Complex (L-Glycine, Ginkgo Biloba, Bacopa Extract, L-Theanine, B3, B5, B6, B2, B1, B12, B9, B7, Vit. C)",
+    "name_fr": "Complexe cerveau effervescent (L-Glycine, Ginkgo Biloba, Extrait de Bacopa, L-Theanine, B3, B5, B6, B2, B1, B12, B9, B7, Vit. C)",
+    "name_ar": "مركب الدماغ فوار (L-Glycine, جنكة بيلوبا, خلاصة الباكوبا, L-Theanine, B3, B5, B6, B2, B1, B12, B9, B7, فيتامين C)"
   },
   {
     "id": "1804ccf4-e8e8-4d4a-95c5-226137fecaba",
@@ -67,7 +79,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Hair and Skin Beauty complex (1000mcg Biotin, 50mg Selenium (Selenomethionine), Vit. C, Zinc, Calcium, B3, B5, B6, B2, B1, B12, B9)",
+    "name_fr": "Complexe beauté cheveux et peau (1000mcg Biotine, 50mg Sélénium (Sélénométhionine), Vit. C, Zinc, Calcium, B3, B5, B6, B2, B1, B12, B9)",
+    "name_ar": "مركب جمال الشعر والبشرة (1000mcg بيوتين, 50mg سيلينيوم (سيلينوميثيونين), فيتامين C, زنك, كالسيوم, B3, B5, B6, B2, B1, B12, B9)"
   },
   {
     "id": "23dcef9f-8eaa-4588-a406-2dbbd6bde0ce",
@@ -81,7 +96,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Children's Multivitamins + Minerals Berry Flavour Chewable tablets",
+    "name_fr": "Enfants Multivitamines + Minéraux comprimés à croquer arôme baies",
+    "name_ar": "الأطفال متعدد الفيتامينات والمعادن أقراص قابلة للمضغ بنكهة التوت"
   },
   {
     "id": "2cece838-101b-4a8d-8930-733869b4fde1",
@@ -95,7 +113,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Vitamin D3 4000IU + Vitamin K2 100ug tablets",
+    "name_fr": "Vitamine D3 4000IU + Vitamine K2 100ug comprimés",
+    "name_ar": "فيتامين D3 4000IU + فيتامين K2 100ug أقراص"
   },
   {
     "id": "35e7536f-b2df-401b-8095-6bcc8daa52dc",
@@ -109,7 +130,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Beauty Premium complex (500mg Marine Collagen, 1000mcg Biotin, Hyaluronic acid, Vit. C, B3, B2)",
+    "name_fr": "Complexe beauté premium effervescent (500mg Collagène marin, 1000mcg Biotine, Acide hyaluronique, Vit. C, B3, B2)",
+    "name_ar": "مركب الجمال بريميوم فوار (500mg كولاجين بحري, 1000mcg بيوتين, حمض الهيالورونيك, فيتامين C, B3, B2)"
   },
   {
     "id": "367903d1-662b-46fd-b405-f124ab418b98",
@@ -123,7 +147,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Magnesium complex (Proprietary blend: Magnesium Bisglycinate, Malate, Citrate, Carbonate)",
+    "name_fr": "Complexe magnésium effervescent (Mélange exclusif: Magnésium Bisglycinate, Malate, Citrate, Carbonate)",
+    "name_ar": "مركب المغنيسيوم فوار (خليط حصري: مغنيسيوم بيسجليسينات, مالات, سترات, كربونات)"
   },
   {
     "id": "39b72679-2080-44c0-b43b-57fc1339b1b5",
@@ -137,7 +164,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Coenzyme Q10 200mg capsules",
+    "name_fr": "Coenzyme Q10 200mg gélules",
+    "name_ar": "إنزيم Q10 200mg كبسولات"
   },
   {
     "id": "4227983e-b3da-411f-9a3a-c61ab3a93878",
@@ -151,7 +181,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "NAC (N-Acetyl L-Cysteine) 500mg capsules",
+    "name_fr": "NAC (N-Acetyl L-Cysteine) 500mg gélules",
+    "name_ar": "NAC (N-Acetyl L-Cysteine) 500mg كبسولات"
   },
   {
     "id": "4338b52f-d19f-4fed-b9ce-7362a063b4b2",
@@ -165,7 +198,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Hair formula (15 active ingredients with 2500mcg Biotin) tablets",
+    "name_fr": "Formule cheveux (15 ingrédients actifs avec 2500mcg Biotine) comprimés",
+    "name_ar": "تركيبة الشعر (15 مكونات فعالة مع 2500mcg بيوتين) أقراص"
   },
   {
     "id": "48ac99da-87de-4ce9-926f-5808ee592808",
@@ -179,7 +215,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Sleep Complex (1.9mg Melatonin, Magnesium, B6, B2, L-Theanine)",
+    "name_fr": "Complexe sommeil effervescent (1.9mg Mélatonine, Magnésium, B6, B2, L-Theanine)",
+    "name_ar": "مركب النوم فوار (1.9mg ميلاتونين, مغنيسيوم, B6, B2, L-Theanine)"
   },
   {
     "id": "49744285-f598-428d-9daa-64828de84c55",
@@ -193,7 +232,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Vitamin C 1000mg",
+    "name_fr": "Vitamine C effervescente 1000mg",
+    "name_ar": "فيتامين ج فوار 1000mg"
   },
   {
     "id": "49be65e5-2868-4905-8d12-f35848ef608d",
@@ -207,7 +249,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Heart Premium Complex with Q10 (16 active ingredients) capsules",
+    "name_fr": "Complexe cœur premium avec Q10 (16 ingrédients actifs) gélules",
+    "name_ar": "مركب القلب بريميوم مع Q10 (16 مكونات فعالة) كبسولات"
   },
   {
     "id": "4db694c2-14a0-40bd-a2aa-11b818b32bb1",
@@ -221,7 +266,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Joint Complex (Glucosamin Sulfate, Chondroitin Sulfate, Collagen, MSM, Boswellia, Ginger, Vit. D3, Vit. C)",
+    "name_fr": "Complexe articulations effervescent (Sulfate de glucosamine, Sulfate de chondroïtine, Collagène, MSM, Boswellia, Gingembre, Vit. D3, Vit. C)",
+    "name_ar": "مركب المفاصل فوار (كبريتات الجلوكوزامين, كبريتات الكوندرويتين, كولاجين, MSM, بوسويليا, زنجبيل, فيتامين D3, فيتامين C)"
   },
   {
     "id": "56b53ec8-bd1b-42f0-b830-0298e922e73a",
@@ -235,7 +283,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Calcium 500mg + Magnesium 250mg + Zinc 15mg +D3 2.5mcg tablets",
+    "name_fr": "Calcium 500mg + Magnésium 250mg + Zinc 15mg +D3 2.5mcg comprimés",
+    "name_ar": "كالسيوم 500mg + مغنيسيوم 250mg + زنك 15mg +D3 2.5mcg أقراص"
   },
   {
     "id": "5cb47aab-a8be-4cbf-966d-73a42f23bf18",
@@ -249,7 +300,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Antistress Complex (Chamomile, Purple Passionflower, Ashwagandha, Lemon Balm, B6, B5, B3, B1, B2, B9, B12, Biotin, Vitamin C, Magnesium, Zinc)",
+    "name_fr": "Complexe anti-stress effervescent (Camomille, Passiflore pourpre, Ashwagandha, Mélisse, B6, B5, B3, B1, B2, B9, B12, Biotine, Vitamine C, Magnésium, Zinc)",
+    "name_ar": "مركب مضاد للتوتر فوار (بابونج, زهرة الآلام الأرجوانية, أشواغاندا, بلسم الليمون, B6, B5, B3, B1, B2, B9, B12, بيوتين, فيتامين C, مغنيسيوم, زنك)"
   },
   {
     "id": "5e88fd00-b5d3-4288-b6c5-b00f9acadfa5",
@@ -263,7 +317,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Vitamin D3 4000IU",
+    "name_fr": "Vitamine D3 effervescente 4000IU",
+    "name_ar": "فيتامين د3 فوار 4000IU"
   },
   {
     "id": "66f35a11-6914-485d-be22-9f15dd8bd0d0",
@@ -277,7 +334,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Immunity complex: Elderberry 750mg + 100mg Vitamin C + 25mg Zinc capsules",
+    "name_fr": "Complexe immunité: Sureau 750mg + 100mg Vitamine C + 25mg Zinc gélules",
+    "name_ar": "مركب المناعة: بلسان 750mg + 100mg فيتامين C + 25mg زنك كبسولات"
   },
   {
     "id": "711fed9a-00da-42cd-909b-2ec4990abeae",
@@ -291,7 +351,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Digestive & Gut Health Probiotic 15 billion CFU + Psylium husk complex capsules",
+    "name_fr": "Probiotique santé digestive et intestinale 15 billion CFU + Enveloppe de psyllium complexe gélules",
+    "name_ar": "بروبيوتيك للجهاز الهضمي والأمعاء 15 billion CFU + قشور السيليوم مركب كبسولات"
   },
   {
     "id": "752c3adc-5f2a-4b51-84a2-7daab8904392",
@@ -305,7 +368,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Vitamin C 1000mg +Zinc 15mg +D3 1000IU",
+    "name_fr": "Vitamine C effervescente 1000mg +Zinc 15mg +D3 1000IU",
+    "name_ar": "فيتامين ج فوار 1000mg +زنك 15mg +D3 1000IU"
   },
   {
     "id": "7a7ba682-dd72-42d7-aca0-2f7b09f87358",
@@ -319,7 +385,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Heart Premium Complex (Hawthorn, Magnesium, Valerian root, L-carnitine L-tartrate, Vit. E, D3, Iodine, B1, B2, B3, B9, B12, Zinc, Chromium, Vit. C)",
+    "name_fr": "Complexe cœur premium effervescent (Aubépine, Magnésium, Racine de valériane, L-carnitine L-tartrate, Vit. E, D3, Iode, B1, B2, B3, B9, B12, Zinc, Chrome, Vit. C)",
+    "name_ar": "مركب القلب بريميوم فوار (زعرور, مغنيسيوم, جذر ناردين, L-carnitine L-tartrate, فيتامين E, D3, يود, B1, B2, B3, B9, B12, زنك, كروم, فيتامين C)"
   },
   {
     "id": "7c5a67dc-e836-49f3-a603-6c1959090067",
@@ -333,7 +402,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Childrens Multivitamins (Calcium, Phosphorus, Vit. E, B3, B2, B6, B1, B5, B12, B9, Biotin)",
+    "name_fr": "Multivitamines enfants effervescentes (Calcium, Phosphore, Vit. E, B3, B2, B6, B1, B5, B12, B9, Biotine)",
+    "name_ar": "متعدد الفيتامينات للأطفال فوار (كالسيوم, فوسفور, فيتامين E, B3, B2, B6, B1, B5, B12, B9, بيوتين)"
   },
   {
     "id": "81fd773c-9db0-4b5e-8d17-8be67ddc231f",
@@ -347,7 +419,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Electrolytes (Sodium 270mg, Potassium 100mg, Magnesium 25mg, Calcium 15mg, Vit C 40mg)",
+    "name_fr": "Électrolytes effervescents (Sodium 270mg, Potassium 100mg, Magnésium 25mg, Calcium 15mg, Vit C 40mg)",
+    "name_ar": "إلكتروليتات فوارة (صوديوم 270mg, بوتاسيوم 100mg, مغنيسيوم 25mg, كالسيوم 15mg, Vit C 40mg)"
   },
   {
     "id": "857c98cf-47e3-445a-8a22-804d82b16017",
@@ -361,7 +436,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Probiotics Premium 10 billion CFU Complex (18 Strains) capsules",
+    "name_fr": "Probiotiques premium 10 billion CFU Complexe (18 Souches) gélules",
+    "name_ar": "بروبيوتيك بريميوم 10 billion CFU مركب (18 سلالات) كبسولات"
   },
   {
     "id": "8c182080-093b-43ad-a850-0b627afc1710",
@@ -375,7 +453,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Women's Premium complex (Ashwagandha, Green tea, Calcium, Phosphorus, Zinc, Iodine, Biotin, Vit. C, Vit. A, D3, K1, B12, B9, B3, B2, B5, B6, B1, Selenium, Molybdenum)",
+    "name_fr": "Complexe premium femmes effervescent (Ashwagandha, Thé vert, Calcium, Phosphore, Zinc, Iode, Biotine, Vit. C, Vit. A, D3, K1, B12, B9, B3, B2, B5, B6, B1, Sélénium, Molybdène)",
+    "name_ar": "مركب النساء بريميوم فوار (أشواغاندا, شاي أخضر, كالسيوم, فوسفور, زنك, يود, بيوتين, فيتامين C, فيتامين A, D3, K1, B12, B9, B3, B2, B5, B6, B1, سيلينيوم, موليبدينوم)"
   },
   {
     "id": "915b7f6b-36a5-424f-8a12-0a284548ca60",
@@ -389,7 +470,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Blood vessels health complex (L-Arginine, L-Citruline, Garlic, Hawthorn, Magnesium, Beetroot, Vit. E, D3, K2, B6, B9, B12) capsules",
+    "name_fr": "Complexe santé vasculaire (L-Arginine, L-Citruline, Ail, Aubépine, Magnésium, Betterave, Vit. E, D3, K2, B6, B9, B12) gélules",
+    "name_ar": "مركب صحة الأوعية الدموية (L-Arginine, L-Citruline, ثوم, زعرور, مغنيسيوم, شمندر, فيتامين E, D3, K2, B6, B9, B12) كبسولات"
   },
   {
     "id": "a880284d-9bb7-437c-9c0a-6f8f897dde9d",
@@ -403,7 +487,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Nootropic Brain and Memory Booster (13 active ingredients) capsule",
+    "name_fr": "Booster nootropique cerveau et mémoire (13 ingrédients actifs) gélule",
+    "name_ar": "معزز نوتروبيك للدماغ والذاكرة (13 مكونات فعالة) كبسولة"
   },
   {
     "id": "b34ad83e-6c6d-4fc8-bb0b-fce102b4e4e0",
@@ -417,7 +504,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Vitamin C 1000mg +Zinc 15mg",
+    "name_fr": "Vitamine C effervescente 1000mg +Zinc 15mg",
+    "name_ar": "فيتامين ج فوار 1000mg +زنك 15mg"
   },
   {
     "id": "b7a43116-e9f7-4512-98d9-5bd218aa8eee",
@@ -431,7 +521,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Men's Premium complex (Saw palmetto, Tribulus Terrestris, Korean Ginseng, Calcium, Phosphorus, Zinc, Iodine, Biotin, D3, K1, Vit. C, Vit. A, B12, B9, B3, B2, B5, B6, B1, Selenium, Chromium, Molybdenum)",
+    "name_fr": "Complexe premium hommes effervescent (Palmier nain, Tribulus Terrestris, Ginseng coréen, Calcium, Phosphore, Zinc, Iode, Biotine, D3, K1, Vit. C, Vit. A, B12, B9, B3, B2, B5, B6, B1, Sélénium, Chrome, Molybdène)",
+    "name_ar": "مركب الرجال بريميوم فوار (بلميط منشاري, تريبولوس تيريستريس, جينسنغ كوري, كالسيوم, فوسفور, زنك, يود, بيوتين, D3, K1, فيتامين C, فيتامين A, B12, B9, B3, B2, B5, B6, B1, سيلينيوم, كروم, موليبدينوم)"
   },
   {
     "id": "be3547c8-442b-4594-a45f-8ee836bc0ad3",
@@ -445,7 +538,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Eye Health (Lutein 10mg, Vit.C 200mg, Bilberry 200mg, Zinc 25mg, B3 20mg, B2 5mg Chrom. 100mcg) capsules",
+    "name_fr": "Santé des yeux (Lutéine 10mg, Vit.C 200mg, Myrtille 200mg, Zinc 25mg, B3 20mg, B2 5mg Chrom. 100mcg) gélules",
+    "name_ar": "صحة العين (لوتين 10mg, فيتامينC 200mg, توت بري 200mg, زنك 25mg, B3 20mg, B2 5mg Chrom. 100mcg) كبسولات"
   },
   {
     "id": "bf90d319-6c25-41b0-bdaa-2d5497d6dcc3",
@@ -459,7 +555,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Multivitamins Premium (Calcium, Phosphorus, Magnesium, Vit. C, Vit. E, Zinc, Vit. A, B3, B5, B2, B6, B1, B9, B12, Biotin, K1, PABA, D3, Chromium, Selenium, Iodine)",
+    "name_fr": "Effervescent Multivitamines Premium (Calcium, Phosphore, Magnésium, Vit. C, Vit. E, Zinc, Vit. A, B3, B5, B2, B6, B1, B9, B12, Biotine, K1, PABA, D3, Chrome, Sélénium, Iode)",
+    "name_ar": "فوار متعدد الفيتامينات بريميوم (كالسيوم, فوسفور, مغنيسيوم, فيتامين C, فيتامين E, زنك, فيتامين A, B3, B5, B2, B6, B1, B9, B12, بيوتين, K1, PABA, D3, كروم, سيلينيوم, يود)"
   },
   {
     "id": "ca48edef-53f3-43ad-b54a-cd55828c72e6",
@@ -473,7 +572,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Omega-3 Fish Oil 1000mg 500 EPA & 250 DHA (TG) softgels",
+    "name_fr": "Huile de poisson oméga-3 1000mg 500 EPA & 250 DHA (TG) capsules molles",
+    "name_ar": "زيت السمك أوميغا-3 1000mg 500 EPA & 250 DHA (TG) كبسولات هلامية"
   },
   {
     "id": "d07ad4ed-7932-4c1c-a807-f992e49cca5c",
@@ -487,7 +589,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Magnesium 200mg (source Carbonate) +B6 2mg",
+    "name_fr": "Magnésium effervescent 200mg (source Carbonate) +B6 2mg",
+    "name_ar": "مغنيسيوم فوار 200mg (مصدر كربونات) +B6 2mg"
   },
   {
     "id": "d211d63f-6d2c-4deb-a683-0899371b56b5",
@@ -501,7 +606,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Magnesium 200mg (from Citrate buffered) +Vitamin B6 5mg tablets",
+    "name_fr": "Magnésium 200mg (de Citrate tamponné) +Vitamine B6 5mg comprimés",
+    "name_ar": "مغنيسيوم 200mg (من سترات مخففة) +فيتامين B6 5mg أقراص"
   },
   {
     "id": "d6dfb7eb-b421-4382-931f-36e7c61bf5ef",
@@ -515,7 +623,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Bones complex (300mg Calcium, 100mg Magnesium Zinc K2, Vitamin C, Folic acid)",
+    "name_fr": "Complexe os effervescent (300mg Calcium, 100mg Magnésium Zinc K2, Vitamine C, Acide folique)",
+    "name_ar": "مركب العظام فوار (300mg كالسيوم, 100mg مغنيسيوم زنك K2, فيتامين C, حمض الفوليك)"
   },
   {
     "id": "df460a28-97c8-44f5-ab1b-d8bfac8c3585",
@@ -529,7 +640,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Vitamin D3 4000IU + K2 100mcg",
+    "name_fr": "Vitamine D3 effervescente 4000IU + K2 100mcg",
+    "name_ar": "فيتامين د3 فوار 4000IU + K2 100mcg"
   },
   {
     "id": "f71aa885-50d7-4aee-bc91-555f12ca58d4",
@@ -543,7 +657,10 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Multivitamins (Calcium, Phosphorus, Vit. E, B3, B2, B6, B1, B5, B12, B9, Biotin)",
+    "name_fr": "Multivitamines effervescentes (Calcium, Phosphore, Vit. E, B3, B2, B6, B1, B5, B12, B9, Biotine)",
+    "name_ar": "متعدد الفيتامينات فوار (كالسيوم, فوسفور, فيتامين E, B3, B2, B6, B1, B5, B12, B9, بيوتين)"
   },
   {
     "id": "fa613974-32f9-41bc-9b34-aef6bdb7fa43",
@@ -557,6 +674,9 @@
     "created_at": null,
     "updated_at": null,
     "in_stock_amount": 0,
-    "status": "In progress"
+    "status": "In progress",
+    "name_en": "Effervescent Immunity Premium Complex (800mg Vitamin C, 1000IU D3, Zinc, Elderberry, Echinacea, Selenium, Vit. A, Vit. E, B6, B2, B12, B9)",
+    "name_fr": "Complexe immunité premium effervescent (800mg Vitamine C, 1000IU D3, Zinc, Sureau, Échinacée, Sélénium, Vit. A, Vit. E, B6, B2, B12, B9)",
+    "name_ar": "مركب المناعة بريميوم فوار (800mg فيتامين C, 1000IU D3, زنك, بلسان, إشناسيا, سيلينيوم, فيتامين A, فيتامين E, B6, B2, B12, B9)"
   }
 ]
