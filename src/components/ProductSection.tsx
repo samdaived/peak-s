@@ -281,9 +281,8 @@ export const ProductSection = () => {
                           {statusLabel(p.status)}
                         </span>
                       </div>
-
-                      </div>
                     </li>
+
                   );
                 })}
               </ul>
